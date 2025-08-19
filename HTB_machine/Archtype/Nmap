@@ -1,0 +1,172 @@
+┌──(sabeshan㉿kali)-[~]
+└─$ nmap -sS -A -sV -T4 10.129.95.187 -vv 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-19 18:01 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:01
+Completed NSE at 18:01, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:01
+Completed NSE at 18:01, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:01
+Completed NSE at 18:01, 0.00s elapsed
+Initiating Ping Scan at 18:01
+Scanning 10.129.95.187 [4 ports]
+Completed Ping Scan at 18:01, 0.59s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 18:01
+Completed Parallel DNS resolution of 1 host. at 18:01, 2.09s elapsed
+Initiating SYN Stealth Scan at 18:01
+Scanning 10.129.95.187 [1000 ports]
+Discovered open port 139/tcp on 10.129.95.187
+Discovered open port 135/tcp on 10.129.95.187
+Discovered open port 445/tcp on 10.129.95.187
+Discovered open port 1433/tcp on 10.129.95.187
+Discovered open port 5985/tcp on 10.129.95.187
+Completed SYN Stealth Scan at 18:01, 4.45s elapsed (1000 total ports)
+Initiating Service scan at 18:01
+Scanning 5 services on 10.129.95.187
+Completed Service scan at 18:01, 9.16s elapsed (5 services on 1 host)
+Initiating OS detection (try #1) against 10.129.95.187
+Retrying OS detection (try #2) against 10.129.95.187
+Retrying OS detection (try #3) against 10.129.95.187
+Retrying OS detection (try #4) against 10.129.95.187
+Retrying OS detection (try #5) against 10.129.95.187
+Initiating Traceroute at 18:02
+Completed Traceroute at 18:02, 0.45s elapsed
+Initiating Parallel DNS resolution of 2 hosts. at 18:02
+Completed Parallel DNS resolution of 2 hosts. at 18:02, 6.60s elapsed
+NSE: Script scanning 10.129.95.187.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 22.77s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 3.15s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 0.01s elapsed
+Nmap scan report for 10.129.95.187
+Host is up, received echo-reply ttl 127 (0.62s latency).
+Scanned at 2025-08-19 18:01:30 IST for 86s
+Not shown: 995 closed tcp ports (reset)
+PORT     STATE SERVICE      REASON          VERSION
+135/tcp  open  msrpc        syn-ack ttl 127 Microsoft Windows RPC
+139/tcp  open  netbios-ssn  syn-ack ttl 127 Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds syn-ack ttl 127 Windows Server 2019 Standard 17763 microsoft-ds
+1433/tcp open  ms-sql-s     syn-ack ttl 127 Microsoft SQL Server 2017 14.00.1000.00; RTM
+| ms-sql-ntlm-info: 
+|   10.129.95.187:1433: 
+|     Target_Name: ARCHETYPE
+|     NetBIOS_Domain_Name: ARCHETYPE
+|     NetBIOS_Computer_Name: ARCHETYPE
+|     DNS_Domain_Name: Archetype
+|     DNS_Computer_Name: Archetype
+|_    Product_Version: 10.0.17763
+| ms-sql-info: 
+|   10.129.95.187:1433: 
+|     Version: 
+|       name: Microsoft SQL Server 2017 RTM
+|       number: 14.00.1000.00
+|       Product: Microsoft SQL Server 2017
+|       Service pack level: RTM
+|       Post-SP patches applied: false
+|_    TCP port: 1433
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Issuer: commonName=SSL_Self_Signed_Fallback
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2025-08-19T12:31:13
+| Not valid after:  2055-08-19T12:31:13
+| MD5:   66ba:5d8e:9cba:0f5b:3e58:0023:0cb0:1e1e
+| SHA-1: 95d6:929d:091f:1fe3:80fc:f2f1:ca3d:1b16:5217:5a1e
+| -----BEGIN CERTIFICATE-----
+| MIIDADCCAeigAwIBAgIQcKHGJqOLHpVJk8WgNRe34zANBgkqhkiG9w0BAQsFADA7
+| MTkwNwYDVQQDHjAAUwBTAEwAXwBTAGUAbABmAF8AUwBpAGcAbgBlAGQAXwBGAGEA
+| bABsAGIAYQBjAGswIBcNMjUwODE5MTIzMTEzWhgPMjA1NTA4MTkxMjMxMTNaMDsx
+| OTA3BgNVBAMeMABTAFMATABfAFMAZQBsAGYAXwBTAGkAZwBuAGUAZABfAEYAYQBs
+| AGwAYgBhAGMAazCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKk8bc67
+| 7/HH0GHlDmWv+g3yudyBs6Xl9pFzfZtTp59wdTC8OegYzSatc55ayphopEThph16
+| ZmUdUIvxnPFWTuuJp8rJZGfzCSai8qFR3jtYhW6ZMuxmsG+TQnLBGe1i9E6kH82+
+| yy9/4/DDGM/7FxQ5LWNNX5LpqzgqE3Yc8eDo/Lhbtp23ibDutdb+MFWdjRZSAcl4
+| lTnz19+ODs1ZmEjAgLx862qzFW/MVFx0i3/+e7jdyniewY1HLIaw7kqEkMBT38kJ
+| XnzsdxjQrfAIjc5p1f8AWD+q469T5jrAh4UCrGIlnBw9+evBfPWS9DqVo52AahMP
+| 5yIROO8jdEk3IpkCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAMV2uw1Xf7Ry/5D9q
+| Hv5n/X8NSUxPt5g4X0P3AuhuvVhpNcFmUoLqtJszzea29yQ3hemxIcHEK8C67aVe
+| +t5kmpU9wFGjonzQzr9iciqYJEeK2SdqvDx91Kf7DMus8D01cXXKE0z87Fn+Lmry
+| D51v5/PEAjbV8leHdiM3pKsnEW8ZEwFOWbL0uOCncwvpn/mQlhplJBQECZGqbuQY
+| fpTDoACr7F+iEZc7PCTUZ0Z+k0HOWrKWbzYGGIjPdXJtx7lhf1VKHDye1NctqkF9
+| 4t6zHWKn2Mfu9zupEbMhELt2Tl2T0rIf1re1JyUZTIgAGphWhxuaaTZl8p+RxU4G
+| lueI0w==
+|_-----END CERTIFICATE-----
+|_ssl-date: 2025-08-19T12:33:00+00:00; +5s from scanner time.
+5985/tcp open  http         syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=8/19%OT=135%CT=1%CU=35565%PV=Y%DS=2%DC=T%G=Y%TM=68A46E
+OS:F8%P=x86_64-pc-linux-gnu)SEQ(SP=104%GCD=1%ISR=10B%TI=RD%CI=I%II=I%TS=U)S
+OS:EQ(SP=105%GCD=1%ISR=106%TI=RD%CI=RI%TS=U)SEQ(SP=105%GCD=1%ISR=10C%TI=RD%
+OS:CI=I%II=I%TS=U)SEQ(SP=107%GCD=1%ISR=108%TI=RD%CI=I%II=I%TS=U)SEQ(SP=FD%G
+OS:CD=1%ISR=10D%TI=RD%CI=I%II=I%TS=U)OPS(O1=M569NW8NNS%O2=M569NW8NNS%O3=M56
+OS:9NW8%O4=M569NW8NNS%O5=M569NW8NNS%O6=M569NNS)WIN(W1=FFFF%W2=FFFF%W3=FFFF%
+OS:W4=FFFF%W5=FFFF%W6=FF70)ECN(R=Y%DF=Y%T=80%W=FFFF%O=M569NW8NNS%CC=Y%Q=)T1
+OS:(R=Y%DF=Y%T=80%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=80%W=0%
+OS:S=A%A=O%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=80%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(
+OS:R=Y%DF=Y%T=80%W=0%S=A%A=O%F=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N%T=80%IPL=164
+OS:%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=80%CD=Z)
+
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=260 (Good luck!)
+IP ID Sequence Generation: Randomized
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time: 
+|   date: 2025-08-19T12:32:37
+|_  start_date: N/A
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 30913/tcp): CLEAN (Couldn't connect)
+|   Check 2 (port 4142/tcp): CLEAN (Couldn't connect)
+|   Check 3 (port 4389/udp): CLEAN (Failed to receive data)
+|   Check 4 (port 27791/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+|_clock-skew: mean: 1h24m06s, deviation: 3h07m52s, median: 4s
+| smb-os-discovery: 
+|   OS: Windows Server 2019 Standard 17763 (Windows Server 2019 Standard 6.3)
+|   Computer name: Archetype
+|   NetBIOS computer name: ARCHETYPE\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2025-08-19T05:32:41-07:00
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+
+TRACEROUTE (using port 110/tcp)
+HOP RTT       ADDRESS
+1   441.48 ms 10.10.16.1
+2   230.70 ms 10.129.95.187
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:02
+Completed NSE at 18:02, 0.00s elapsed
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 89.16 seconds
+           Raw packets sent: 1266 (60.684KB) | Rcvd: 1194 (51.292KB)
