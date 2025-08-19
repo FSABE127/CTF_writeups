@@ -1,0 +1,100 @@
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+└─$ nmap -sS -A -sV -T4 10.129.95.191 -vv       
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-19 18:53 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+Initiating Ping Scan at 18:53
+Scanning 10.129.95.191 [4 ports]
+Completed Ping Scan at 18:53, 0.32s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 18:53
+Completed Parallel DNS resolution of 1 host. at 18:53, 0.17s elapsed
+Initiating SYN Stealth Scan at 18:53
+Scanning 10.129.95.191 [1000 ports]
+Discovered open port 22/tcp on 10.129.95.191
+Discovered open port 80/tcp on 10.129.95.191
+Completed SYN Stealth Scan at 18:53, 4.00s elapsed (1000 total ports)
+Initiating Service scan at 18:53
+Scanning 2 services on 10.129.95.191
+Completed Service scan at 18:53, 6.98s elapsed (2 services on 1 host)
+Initiating OS detection (try #1) against 10.129.95.191
+Initiating Traceroute at 18:54
+Completed Traceroute at 18:54, 0.65s elapsed
+Initiating Parallel DNS resolution of 2 hosts. at 18:54
+Completed Parallel DNS resolution of 2 hosts. at 18:54, 6.71s elapsed
+NSE: Script scanning 10.129.95.191.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 20.48s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 1.79s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 0.00s elapsed
+Nmap scan report for 10.129.95.191
+Host is up, received echo-reply ttl 63 (0.62s latency).
+Scanned at 2025-08-19 18:53:43 IST for 47s
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl 63 OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 61:e4:3f:d4:1e:e2:b2:f1:0d:3c:ed:36:28:36:67:c7 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxxctowbmnTyFHK0XREQShvlp32DNZ7TS9fp1pTxwt4urebfFSitu4cF2dgTlCyVI6o+bxVLuWvhbKqUNpl/9BCv/1DFEDmbbygvwwcONVx5BtcpO/4ubylZXmzWkC6neyGaQjmzVJFMeRTTUsNkcMgpkTJXSpcuNZTknnQu/SSUC5ZUNPdzgNkHcobGhHNoaJC2StrcFwvcg2ftx6b+wEap6jWbLId8UfJk0OFCHZWZI/SubDzjx3030ZCacC1Sb61/p4Cz9MvLL5qPYcEm8A14uU9pTUfDvhin1KAEEDCSCS3bnvtlw1V7SyF/tqtzPNsmdqG2wKXUb6PLyllU/L
+|   256 24:1d:a4:17:d4:e3:2a:9c:90:5c:30:58:8f:60:77:8d (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLaHbfbieD7gNSibdzPXBW7/NO05J48DoR4Riz65jUkMsMhI+m3mHjowOPQISgaB8VmT/kUggapZt/iksoOn2Ig=
+|   256 78:03:0e:b4:a1:af:e5:c2:f9:8d:29:05:3e:29:c9:f2 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLh0LONi0YmlZbqc960WnEcjI1XJTP8Li2KiUt5pmkk
+80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.29 ((Ubuntu))
+|_http-title: Welcome
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+Device type: general purpose|router
+Running: Linux 5.X, MikroTik RouterOS 7.X
+OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:mikrotik:routeros:7 cpe:/o:linux:linux_kernel:5.6.3
+OS details: Linux 5.0 - 5.14, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=8/19%OT=22%CT=1%CU=43186%PV=Y%DS=2%DC=T%G=Y%TM=68A47B0
+OS:E%P=x86_64-pc-linux-gnu)SEQ(SP=108%GCD=1%ISR=10B%TI=Z%CI=Z%II=I%TS=A)OPS
+OS:(O1=M569ST11NW7%O2=M569ST11NW7%O3=M569NNT11NW7%O4=M569ST11NW7%O5=M569ST1
+OS:1NW7%O6=M569ST11)WIN(W1=FE88%W2=FE88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)ECN
+OS:(R=Y%DF=Y%T=40%W=FAF0%O=M569NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A
+OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R
+OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F
+OS:=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%
+OS:RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 32.536 days (since Fri Jul 18 06:02:59 2025)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=264 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 111/tcp)
+HOP RTT       ADDRESS
+1   529.68 ms 10.10.16.1
+2   630.43 ms 10.129.95.191
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 0.01s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:54
+Completed NSE at 18:54, 0.00s elapsed
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 47.85 seconds
+           Raw packets sent: 1143 (51.126KB) | Rcvd: 1145 (48.397KB)
