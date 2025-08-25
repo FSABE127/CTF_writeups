@@ -1,0 +1,111 @@
+
+
+========================================================================================================
+┌──(sabeshan㉿kali)-[~]
+└─$ nmap -sC -sV -p22,80,443 10.129.21.226 -vv 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-25 18:52 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:52
+Completed NSE at 18:52, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:52
+Completed NSE at 18:52, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:52
+Completed NSE at 18:52, 0.00s elapsed
+Initiating Ping Scan at 18:52
+Scanning 10.129.21.226 [4 ports]
+Completed Ping Scan at 18:52, 0.54s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 18:52
+Completed Parallel DNS resolution of 1 host. at 18:52, 0.09s elapsed
+Initiating SYN Stealth Scan at 18:52
+Scanning 10.129.21.226 [3 ports]
+Discovered open port 80/tcp on 10.129.21.226
+Discovered open port 443/tcp on 10.129.21.226
+Discovered open port 22/tcp on 10.129.21.226
+Completed SYN Stealth Scan at 18:52, 0.49s elapsed (3 total ports)
+Initiating Service scan at 18:52
+Scanning 3 services on 10.129.21.226
+Warning: Hit PCRE_ERROR_MATCHLIMIT when probing for service http with the regex '^HTTP/1\.1 \d\d\d (?:[^\r\n]*\r\n(?!\r\n))*?.*\r\nServer: Virata-EmWeb/R([\d_]+)\r\nContent-Type: text/html; ?charset=UTF-8\r\nExpires: .*<title>HP (Color |)LaserJet ([\w._ -]+)&nbsp;&nbsp;&nbsp;'
+Completed Service scan at 18:52, 14.13s elapsed (3 services on 1 host)
+NSE: Script scanning 10.129.21.226.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:52
+Completed NSE at 18:53, 13.54s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 3.56s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.01s elapsed
+Nmap scan report for 10.129.21.226
+Host is up, received echo-reply ttl 127 (0.48s latency).
+Scanned at 2025-08-25 18:52:41 IST for 32s
+
+PORT    STATE SERVICE  REASON          VERSION
+22/tcp  open  ssh      syn-ack ttl 127 OpenSSH for_Windows_8.1 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 9f:a0:f7:8c:c6:e2:a4:bd:71:87:68:82:3e:5d:b7:9f (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJ6igORqDgM0+6P4dUx3DcDJyuzMMRkDabKsdcrizRtEKleaaYjmgCbwyhD+JqwIX2AZqoC0MLH0q37YJzp3aegjEW9Q0dUBQGSoRRe8wWmsHRFbxgaoGunpB5VK4p3KE2MPVJXUkTSW2Mdrq4yWb63HnNF4TSIPk/+U5e99Qlrgmn0IeJrn9jkRBjPjLq1HSL0zY4YTO5qnvUktZ8J0Y19YVkYfZoLXJeTtiUKEXJYIUog8oUq9M8+1rUHU/GTjdU5X+jNExqvWm15fXr42Of2hnKP8ZRjyynWZ9hPAQjmCHCxh0Mvn/fWCsJ2nri/3SOULiwEfG9XULbLX0tABz++ujmiRyOZoPDscazFzxqfofiJhRm4cxiYf1p2pfjITfWGpxOUxOYDawXT10fLjo7hjpDqy6pKuK3TGbBx5VVG9p1szrctN9XpnI2bmpTMix3ISqddFgTHJimyb5TrcWZ876igSAPx0GtVOZqAk4ae1xh/qutG/PONnVQWcwZQLU=
+|   256 90:7d:96:a9:6e:9e:4d:40:94:e7:bb:55:eb:b3:0b:97 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPnBLEC67Ty1ccuPW0DPWevSQAIg39y1jbSVLmegQkZ3vCooq0wheIffYyBhRnAAJj6Fi1jpTxP7u6H8JAqyGjU=
+|   256 f9:10:eb:76:d4:6d:4f:3e:17:f3:93:d6:0b:8c:4b:81 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9o7yWjLL4g6Gu71UeLZB+kbmzW+cp0eiRtb21D1JZC
+80/tcp  open  http     syn-ack ttl 127 Apache httpd 2.4.41 ((Win64) OpenSSL/1.1.1c PHP/7.2.28)
+|_http-server-header: Apache/2.4.41 (Win64) OpenSSL/1.1.1c PHP/7.2.28
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: MegaShopping
+443/tcp open  ssl/http syn-ack ttl 127 Apache httpd 2.4.41 ((Win64) OpenSSL/1.1.1c PHP/7.2.28)
+| tls-alpn: 
+|_  http/1.1
+|_http-server-header: Apache/2.4.41 (Win64) OpenSSL/1.1.1c PHP/7.2.28
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_ssl-date: TLS randomness does not represent time
+| ssl-cert: Subject: commonName=localhost
+| Issuer: commonName=localhost
+| Public Key type: rsa
+| Public Key bits: 1024
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2009-11-10T23:48:47
+| Not valid after:  2019-11-08T23:48:47
+| MD5:   a0a4:4cc9:9e84:b26f:9e63:9f9e:d229:dee0
+| SHA-1: b023:8c54:7a90:5bfa:119c:4e8b:acca:eacf:3649:1ff6
+| -----BEGIN CERTIFICATE-----
+| MIIBnzCCAQgCCQC1x1LJh4G1AzANBgkqhkiG9w0BAQUFADAUMRIwEAYDVQQDEwls
+| b2NhbGhvc3QwHhcNMDkxMTEwMjM0ODQ3WhcNMTkxMTA4MjM0ODQ3WjAUMRIwEAYD
+| VQQDEwlsb2NhbGhvc3QwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMEl0yfj
+| 7K0Ng2pt51+adRAj4pCdoGOVjx1BmljVnGOMW3OGkHnMw9ajibh1vB6UfHxu463o
+| J1wLxgxq+Q8y/rPEehAjBCspKNSq+bMvZhD4p8HNYMRrKFfjZzv3ns1IItw46kgT
+| gDpAl1cMRzVGPXFimu5TnWMOZ3ooyaQ0/xntAgMBAAEwDQYJKoZIhvcNAQEFBQAD
+| gYEAavHzSWz5umhfb/MnBMa5DL2VNzS+9whmmpsDGEG+uR0kM1W2GQIdVHHJTyFd
+| aHXzgVJBQcWTwhp84nvHSiQTDBSaT6cQNQpvag/TaED/SEQpm0VqDFwpfFYuufBL
+| vVNbLkKxbK2XwUvu0RxoLdBMC/89HqrZ0ppiONuQ+X2MtxE=
+|_-----END CERTIFICATE-----
+|_http-title: MegaShopping
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 18:53
+Completed NSE at 18:53, 0.00s elapsed
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 32.69 seconds
+           Raw packets sent: 7 (284B) | Rcvd: 5 (204B)
