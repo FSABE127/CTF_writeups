@@ -1,0 +1,32 @@
+1.There is two ports are open and one of have it http with "next js framework" called 
+======================================================================================
+┌──(sabeshan㉿kali)-[~]
+└─$ dirsearch -u http://previous.htb/api/auth/
+/usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  from pkg_resources import DistributionNotFound, VersionConflict
+
+  _|. _ _  _  _  _ _|_    v0.4.3                                                                                                                             
+ (_||| _) (/_(_|| (_| )                                                                                                                                      
+                                                                                                                                                             
+Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460
+
+Output File: /home/sabeshan/reports/http_previous.htb/_api_auth__25-08-27_07-46-17.txt
+
+Target: http://previous.htb/
+
+[07:46:17] Starting: api/auth/                                                                                                                               
+[07:46:21] 308 -   27B  - /api/auth/%2e%2e//google.com  ->  /api/auth/%2E%2E/google.com
+[07:47:04] 308 -   28B  - /api/auth/axis//happyaxis.jsp  ->  /api/auth/axis/happyaxis.jsp
+[07:47:04] 308 -   39B  - /api/auth/axis2//axis2-web/HappyAxis.jsp  ->  /api/auth/axis2/axis2-web/HappyAxis.jsp
+[07:47:04] 308 -   33B  - /api/auth/axis2-web//HappyAxis.jsp  ->  /api/auth/axis2-web/HappyAxis.jsp
+[07:47:12] 308 -   61B  - /api/auth/Citrix//AccessPlatform/auth/clientscripts/cookies.js  ->  /api/auth/Citrix/AccessPlatform/auth/clientscripts/cookies.js
+[07:47:25] 308 -   48B  - /api/auth/engine/classes/swfupload//swfupload.swf  ->  /api/auth/engine/classes/swfupload/swfupload.swf
+[07:47:25] 308 -   51B  - /api/auth/engine/classes/swfupload//swfupload_f9.swf  ->  /api/auth/engine/classes/swfupload/swfupload_f9.swf
+[07:47:25] 200 -    5KB - /api/auth/error                                   
+[07:47:25] 200 -    5KB - /api/auth/error/error.log                         
+[07:47:27] 308 -   36B  - /api/auth/extjs/resources//charts.swf  ->  /api/auth/extjs/resources/charts.swf
+[07:47:35] 308 -   46B  - /api/auth/html/js/misc/swfupload//swfupload.swf  ->  /api/auth/html/js/misc/swfupload/swfupload.swf
+[07:48:22] 200 -    2B  - /api/auth/session                                 
+[07:48:24] 302 -    0B  - /api/auth/signin  ->  /signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000
+[07:48:25] 200 -    5KB - /api/auth/signout 
+===========================================================================================================
