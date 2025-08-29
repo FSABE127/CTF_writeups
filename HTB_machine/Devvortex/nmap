@@ -1,0 +1,100 @@
+┌──(sabeshan㉿kali)-[~]
+└─$ nmap -sS -A -sV -T4 10.10.11.242 -vv
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-29 19:01 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 19:01
+Completed NSE at 19:01, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 19:01
+Completed NSE at 19:01, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 19:01
+Completed NSE at 19:01, 0.00s elapsed
+Initiating Ping Scan at 19:01
+Scanning 10.10.11.242 [4 ports]
+Completed Ping Scan at 19:01, 0.22s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 19:01
+Completed Parallel DNS resolution of 1 host. at 19:01, 0.05s elapsed
+Initiating SYN Stealth Scan at 19:01
+Scanning 10.10.11.242 [1000 ports]
+Discovered open port 22/tcp on 10.10.11.242
+Discovered open port 80/tcp on 10.10.11.242
+Completed SYN Stealth Scan at 19:02, 3.90s elapsed (1000 total ports)
+Initiating Service scan at 19:02
+Scanning 2 services on 10.10.11.242
+Completed Service scan at 19:02, 6.39s elapsed (2 services on 1 host)
+Initiating OS detection (try #1) against 10.10.11.242
+Initiating Traceroute at 19:02
+Completed Traceroute at 19:02, 0.20s elapsed
+Initiating Parallel DNS resolution of 2 hosts. at 19:02
+Completed Parallel DNS resolution of 2 hosts. at 19:02, 6.56s elapsed
+NSE: Script scanning 10.10.11.242.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 5.56s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 0.79s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 0.00s elapsed
+Nmap scan report for 10.10.11.242
+Host is up, received echo-reply ttl 63 (0.19s latency).                                                                                                                                                                                     
+Scanned at 2025-08-29 19:01:57 IST for 26s                                                                                                                                                                                                  
+Not shown: 998 closed tcp ports (reset)                                                                                                                                                                                                     
+PORT   STATE SERVICE REASON         VERSION                                                                                                                                                                                                 
+22/tcp open  ssh     syn-ack ttl 63 OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)                                                                                                                                            
+| ssh-hostkey:                                                                                                                                                                                                                              
+|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)                                                                                                                                                                              
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC82vTuN1hMqiqUfN+Lwih4g8rSJjaMjDQdhfdT8vEQ67urtQIyPszlNtkCDn6MNcBfibD/7Zz4r8lr1iNe/Afk6LJqTt3OWewzS2a1TpCrEbvoileYAl/Feya5PfbZ8mv77+MWEA+kT0pAw1xW9bpkhYCGkJQm9OYdcsEEg1i+kQ/ng3+GaFrGJjxqYaW1LXyXN1f7j9xG2f27rKEZoRO/9HOH9Y+5ru184QQXjW/ir+lEJ7xTwQA5U1GOW1m/AgpHIfI5j9aDfT/r4QMe+au+2yPotnOGBBJBz3ef+fQzj/Cq7OGRR96ZBfJ3i00B/Waw/RI19qd7+ybNXF/gBzptEYXujySQZSu92Dwi23itxJBolE6hpQ2uYVA8VBlF0KXESt3ZJVWSAsU3oguNCXtY7krjqPe6BZRy+lrbeska1bIGPZrqLEgptpKhz14UaOcH9/vpMYFdSKr24aMXvZBDK1GJg50yihZx8I9I367z0my8E89+TnjGFY2QTzxmbmU=
+|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBH2y17GUe6keBxOcBGNkWsliFwTRwUtQB3NXEhTAFLziGDfCgBV7B9Hp6GQMPGQXqMk7nnveA8vUz0D7ug5n04A=
+|   256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKfXa+OM5/utlol5mJajysEsV4zb/L0BJ1lKxMPadPvR
+80/tcp open  http    syn-ack ttl 63 nginx 1.18.0 (Ubuntu)
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Did not follow redirect to http://devvortex.htb/
+|_http-server-header: nginx/1.18.0 (Ubuntu)
+Device type: general purpose|router
+Running: Linux 5.X, MikroTik RouterOS 7.X
+OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:mikrotik:routeros:7 cpe:/o:linux:linux_kernel:5.6.3
+OS details: Linux 5.0 - 5.14, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=8/29%OT=22%CT=1%CU=31854%PV=Y%DS=2%DC=T%G=Y%TM=68B1ABE
+OS:7%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=1%ISR=108%TI=Z%CI=Z%II=I%TS=A)OPS
+OS:(O1=M577ST11NW7%O2=M577ST11NW7%O3=M577NNT11NW7%O4=M577ST11NW7%O5=M577ST1
+OS:1NW7%O6=M577ST11)WIN(W1=FE88%W2=FE88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)ECN
+OS:(R=Y%DF=Y%T=40%W=FAF0%O=M577NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A
+OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R
+OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F
+OS:=R%O=%RD=0%Q=)T7(R=N)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%
+OS:RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 42.319 days (since Fri Jul 18 11:22:33 2025)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=262 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 3306/tcp)
+HOP RTT       ADDRESS
+1   193.94 ms 10.10.14.1
+2   183.79 ms 10.10.11.242
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 19:02
+Completed NSE at 19:02, 0.00s elapsed
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 26.54 seconds
+           Raw packets sent: 1332 (59.442KB) | Rcvd: 1107 (49.469KB)
