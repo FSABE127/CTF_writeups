@@ -1,6 +1,6 @@
 1.There is two ports are open and one of have it http with "next js framework" called 
 ======================================================================================
-┌──(sabeshan㉿kali)-[~]
+##┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://previous.htb/api/auth/
 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
   from pkg_resources import DistributionNotFound, VersionConflict
@@ -30,3 +30,66 @@ Target: http://previous.htb/
 [07:48:24] 302 -    0B  - /api/auth/signin  ->  /signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000
 [07:48:25] 200 -    5KB - /api/auth/signout 
 ===========================================================================================================
+# Project Title
+
+One Paragraph of project description goes here. Explain what the project does, its purpose, and any important context.
+
+## Table of Contents
+- [About The Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
+
+## About The Project
+
+More detailed explanation of the project, its goals, and features.
+
+## Built With
+
+List major frameworks, libraries, or tools used to build the project.
+
+## Getting Started
+
+Instructions to get a copy of the project running on a local machine.
+
+### Prerequisites
+
+What things are needed to install the software and how to install them.
+
+### Installation
+
+Step-by-step series of examples that tell how to get a development environment running.
+
+## Usage
+
+How to run the project or use the software after installation.
+
+## Roadmap
+
+List planned features or future improvements.
+
+## Contributing
+
+Explain how others can contribute to the project, guidelines for pull requests, etc.
+
+## License
+
+State the project license (e.g., MIT, GPL).
+
+## Contact
+
+Your name - your.email@example.com
+
+Project Link: https://github.com/yourusername/yourproject
+
+## Acknowledgements
+
+Credit people, libraries, resources, etc. that helped you with the project.
+
