@@ -1,0 +1,92 @@
+┌──(sabeshan㉿kali)-[~]
+└─$ nmap -sS -A -sV -T4 10.201.107.113 -vv
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-31 13:29 IST
+NSE: Loaded 157 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 13:29
+Completed NSE at 13:29, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 13:29
+Completed NSE at 13:29, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 13:29
+Completed NSE at 13:29, 0.00s elapsed
+Initiating Ping Scan at 13:29
+Scanning 10.201.107.113 [4 ports]
+Completed Ping Scan at 13:29, 0.45s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 13:29
+Completed Parallel DNS resolution of 1 host. at 13:29, 0.14s elapsed
+Initiating SYN Stealth Scan at 13:29
+Scanning 10.201.107.113 [1000 ports]
+Discovered open port 80/tcp on 10.201.107.113
+Completed SYN Stealth Scan at 13:29, 15.21s elapsed (1000 total ports)
+Initiating Service scan at 13:29
+Scanning 1 service on 10.201.107.113
+Completed Service scan at 13:29, 7.05s elapsed (1 service on 1 host)
+Initiating OS detection (try #1) against 10.201.107.113
+Initiating Traceroute at 13:29
+Completed Traceroute at 13:29, 3.01s elapsed
+Initiating Parallel DNS resolution of 2 hosts. at 13:29
+Completed Parallel DNS resolution of 2 hosts. at 13:30, 8.40s elapsed
+NSE: Script scanning 10.201.107.113.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 5.97s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 1.29s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 0.00s elapsed
+Nmap scan report for 10.201.107.113
+Host is up, received timestamp-reply ttl 61 (0.27s latency).
+Scanned at 2025-08-31 13:29:27 IST for 44s
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+80/tcp open  http    syn-ack ttl 61 Apache httpd 2.4.18 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-generator: WordPress 4.1.31
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: ColddBox | One more machine
+Device type: general purpose
+Running: Linux 4.X
+OS CPE: cpe:/o:linux:linux_kernel:4.4
+OS details: Linux 4.4
+TCP/IP fingerprint:
+OS:SCAN(V=7.95%E=4%D=8/31%OT=80%CT=1%CU=41495%PV=Y%DS=4%DC=T%G=Y%TM=68B4010
+OS:B%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=1%ISR=10A%TI=Z%CI=I%TS=8)OPS(O1=M
+OS:508ST11NW7%O2=M508ST11NW7%O3=M508NNT11NW7%O4=M508ST11NW7%O5=M508ST11NW7%
+OS:O6=M508ST11)WIN(W1=68DF%W2=68DF%W3=68DF%W4=68DF%W5=68DF%W6=68DF)ECN(R=Y%
+OS:DF=Y%T=40%W=6903%O=M508NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=
+OS:0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF
+OS:=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=
+OS:%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%
+OS:IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 186.179 days (since Wed Feb 26 09:12:23 2025)
+Network Distance: 4 hops
+TCP Sequence Prediction: Difficulty=262 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE (using port 993/tcp)
+HOP RTT       ADDRESS
+1   269.19 ms 10.8.0.1
+2   ... 3
+4   283.44 ms 10.201.107.113
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 13:30
+Completed NSE at 13:30, 0.00s elapsed
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 45.61 seconds
+           Raw packets sent: 1423 (63.502KB) | Rcvd: 1148 (52.070KB)
