@@ -1,3 +1,4 @@
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ nmap -sS -A -sV -T4 10.129.151.160 -vv
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-21 18:42 IST
@@ -141,3 +142,4 @@ PORT      STATE         SERVICE REASON
 69/udp    open|filtered tftp    no-response
 34862/udp open|filtered unknown no-response
 -------------------------------------------------------------------------------------------------------------
+```
