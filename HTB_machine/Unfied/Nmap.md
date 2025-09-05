@@ -1,3 +1,4 @@
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ nmap -sS -A -sV -T4 10.129.126.22 -vv 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-20 18:42 IST
@@ -139,3 +140,4 @@ Read data files from: /usr/share/nmap
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 277.03 seconds
            Raw packets sent: 1204 (55.044KB) | Rcvd: 1197 (50.052KB)
+```
