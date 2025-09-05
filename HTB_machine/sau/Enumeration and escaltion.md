@@ -1,8 +1,10 @@
 1.
+```bash
 ──(sabeshan㉿kali)-[~/CVE/request_baskets_1.2.1]
-└─$ python3 CVE-2023-27163.py 
+└─$ python3 CVE-2023-27163.py
 Exploit for SSRF vulnerability on Request-Baskets (1.2.1) (CVE-2023-27163).
 Usage: python3 exploit.py <public_url> <targeted_url>
+```
 ----------------------------------------------------------------------------
 2.
 ```bash
