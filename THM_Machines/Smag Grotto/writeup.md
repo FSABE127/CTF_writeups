@@ -4,10 +4,11 @@
 
 ---
 
-## 1. Summary
-- **Objective:** Short description of the machine goal (user/root/flags/etc.)  
-- **Description:** Brief overview of the target, services, and challenges.  
-- **Skills Practiced:** Enumeration, exploitation, privilege escalation, web, binary, etc.
+## 1. Summary  
+- **Description:** Find the directory via direcotry fuzzing, and anaalyze the wireshark file.enter the
+                   page via crendentials obtain from the  and go the webshell escalate privilege and gain
+                   the root shell. 
+- **Skills Practiced:** Enumeration, exploitation, privilege escalation, web, wire-shark analysis.
 
 ---
 
