@@ -478,7 +478,7 @@ ben@soulmate:~$
 ---
 ```bash
 ┌──(sabeshan㉿kali)-[~]
-└─$ ssh ben@soulmate.htb -P 2222 
+└─$ ssh ben@soulmate.htb
 ben@soulmate.htb's password: 
 Last login: Sat Sep 13 02:13:05 2025 from 10.10.14.18
 ben@soulmate:~$ id
